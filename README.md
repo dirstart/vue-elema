@@ -24,3 +24,11 @@
 * 同时为了我们的后台能够被看见，不能使用 vue-cli webpack 默认的 启动路径
 这个拿不到数据：`http://localhost:8080/#/api/seller`
 下面这个可以： `http://localhost:8080/api/seller`
+
+### 踩坑实录
+
+#### 1.关于 localhost:8080/#/ 和 localhost:8080 的区别
+> 因为 vue-cli 默认的带 #，导致我在 webpack.dev.conf.js 中写的 路由无效了。 
+
+https://segmentfault.com/q/1010000010340823
+https://www.imooc.com/qadetail/229672?lastmedia=1

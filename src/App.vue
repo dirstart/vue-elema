@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div class="header">
-      <!-- I'm header. -->
       <sf-header></sf-header>
     </div>
     <div class="tab">
