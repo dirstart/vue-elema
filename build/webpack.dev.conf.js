@@ -10,6 +10,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+// 这里是我们使用 express 进行的后台操作.
+
+const appData = require('../data.json');
+const seller = appData.seller;
+console.log(seller);
+console.log('test', appData);
+
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
@@ -22,6 +29,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    before(app) {
+      app.get('/api/seller', (req, res) => {
+        res.json({
+          errno: 0,
+          data: seller
+        });
+      });
+    },
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
