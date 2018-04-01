@@ -1041,4 +1041,30 @@ body .markdown-body
 <li>同时为了我们的后台能够被看见，不能使用 vue-cli webpack 默认的 启动路径<br />
 这个拿不到数据：<code>http://localhost:8080/#/api/seller</code><br />
 下面这个可以： <code>http://localhost:8080/api/seller</code></li>
-</ul></article></body></html>
+</ul>
+<h3 id="_2"><a name="user-content-_2" href="#_2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>踩坑实录</h3>
+<h4 id="1-localhost8080-localhost8080"><a name="user-content-1-localhost8080-localhost8080" href="#1-localhost8080-localhost8080" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1.关于 localhost:8080/#/ 和 localhost:8080 的区别</h4>
+<blockquote>
+<p>因为 vue-cli 默认的带 #，导致我在 webpack.dev.conf.js 中写的 路由无效了。 </p>
+</blockquote>
+<p><a href="https://segmentfault.com/q/1010000010340823">https://segmentfault.com/q/1010000010340823</a><br />
+<a href="https://www.imooc.com/qadetail/229672?lastmedia=1">https://www.imooc.com/qadetail/229672?lastmedia=1</a></p>
+<h4 id="2"><a name="user-content-2" href="#2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2.配置路径别名的方法</h4>
+<pre><code>'common': resolve('src/common')
+'common': path.resolve(__dirname, '../src/common')
+</code></pre>
+
+<h4 id="3-sylus"><a name="user-content-3-sylus" href="#3-sylus" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3.严重： sylus 无法引入 字体文件</h4>
+<p>原引用方式(失败的方式，修改原来的 css 为 styl 文件)：猜测可能是 webpack 中 stylus 需要相关配置？  --------------  <code>style</code> 下引用<br />
+<pre><code>&lt;style lang=&quot;stylus&quot; ref=&quot;stylesheet/stylus&quot;&gt;
+  @import &quot;common/stylus/index.styl&quot;
+  @import &quot;common/stylus/icon.styl&quot;
+</code></pre><br />
+现引用方案：使用原来默认的 .css 文件  ------- <code>script</code> 下引用。<br />
+<pre><code>&lt;script&gt;
+import header from '@/components/header/header.vue';
+import 'common/stylus/test.css';
+</code></pre></p>
+<h2 id="httpssegmentfaultcomq1010000009500736"><a name="user-content-httpssegmentfaultcomq1010000009500736" href="#httpssegmentfaultcomq1010000009500736" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>短期内无法解决该问题：<a href="https://segmentfault.com/q/1010000009500736">https://segmentfault.com/q/1010000009500736</a></h2>
+<h2 id="css"><a name="user-content-css" href="#css" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>留待有空解决。暂时采用 css 方案。</h2>
+<h4 id="4-1px"><a name="user-content-4-1px" href="#4-1px" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>4.移动端实现 1px 的办法</h4></article></body></html>
