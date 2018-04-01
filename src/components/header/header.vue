@@ -9,6 +9,4 @@ export default {};
 </script>
 
 <style lang="stylus" ref="stylesheet/stylus">
-  div
-    color: red
 </style>

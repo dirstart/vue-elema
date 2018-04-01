@@ -3,14 +3,15 @@
     <div class="header">
       <sf-header></sf-header>
     </div>
-    <div class="tab">
-      <div class="tab-item">商品</div>
-      <div class="tab-item">评论</div>
-      <div class="tab-item">商家</div>
-    </div>
+    <ul class="tab">
+      <router-link to="/goods" tag="li" class="tab-item">商品</router-link>
+      <router-link to="/ratings" tag="li" class="tab-item">评价</router-link>
+      <router-link to="/seller" tag="li" class="tab-item">商家</router-link>
+    </ul>
     <div class="content">
       I'm content.
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -29,6 +30,9 @@ export default {
     .tab
       display: flex
       width: 100%
+      height: 40px
+      line-height: 40px
       .tab-item
         flex: 1
+        text-align: center
 </style>
