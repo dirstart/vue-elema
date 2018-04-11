@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <sf-header></sf-header>
+      <sf-header :seller="seller"></sf-header>
     </div>
     <ul class="tab border-1px">
       <router-link to="/goods" tag="li" class="tab-item">商品</router-link>
@@ -23,6 +23,18 @@ export default {
   name: 'app',
   components: {
     SfHeader: header
+  },
+  // 定义成函数的原因其实是 闭包！ 如果定义成对象就不好复用了
+  data () {
+    return {
+      seller: {}
+    };
+  },
+  async created () {
+    const me = this;
+    const res = await me.axios.get('/api/seller');
+    this.seller = res.data.data;
+    console.log('test', this.seller);
   }
 };
 </script>
