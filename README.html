@@ -1067,4 +1067,48 @@ import 'common/stylus/test.css';
 </code></pre></p>
 <h2 id="httpssegmentfaultcomq1010000009500736"><a name="user-content-httpssegmentfaultcomq1010000009500736" href="#httpssegmentfaultcomq1010000009500736" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>短期内无法解决该问题：<a href="https://segmentfault.com/q/1010000009500736">https://segmentfault.com/q/1010000009500736</a></h2>
 <h2 id="css"><a name="user-content-css" href="#css" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>留待有空解决。暂时采用 css 方案。</h2>
-<h4 id="4-1px"><a name="user-content-4-1px" href="#4-1px" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>4.移动端实现 1px 的办法</h4></article></body></html>
+<h4 id="4-1px"><a name="user-content-4-1px" href="#4-1px" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>4.移动端实现 1px 的办法</h4>
+<p>通过 @media 查询参数来实现。通过 after 来实现 border，此后通过 查询，分别给 after 添加 transform 缩放来实现。我们可以通过添加背景来检验是否真的变化。(因为1px的变动很难用肉眼观测到)<br />
+<pre><code>@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)
+  .border-1px
+    &amp;::after
+      -webkit-transform: scaleY(0.7)
+      transform: scaleY(0.7)
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+  .border-1px
+    &amp;::after
+      -webkit-transform: scaleY(0.5)
+      transform: scaleY(0.5)
+      background-color: red
+</code></pre></p>
+<h4 id="5keepalive"><a name="user-content-5keepalive" href="#5keepalive" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>5.keepAlive 的学习和使用</h4>
+<blockquote>
+<p>今天学习了下这个 组件缓存 的功能。简单地来说，可以使用在 input 的信息保留上。</p>
+</blockquote>
+<ul>
+<li>普通组件的 信息保留。 ----   当 v-if 切换的时候，通过注释的地方可以保留信息。<br />
+<pre><code>  &lt;div&gt;
+    &lt;!-- &lt;keep-alive include=&quot;test-keep-alive&quot;&gt; --&gt;
+      &lt;test-keep-alive v-if=&quot;bool&quot;&gt;&lt;/test-keep-alive&gt;
+    &lt;!-- &lt;/keep-alive&gt; --&gt;
+    &lt;button @click=&quot;handleBool&quot;&gt;test&lt;/button&gt;
+  &lt;/div&gt;
+</code></pre></li>
+<li>更为酷炫的是： 路由里面的缓存保留。 &ndash; 目测应该常用于 登录注册。 (很关键的功能)<br />
+<pre><code>{
+  path: '/goods',
+  name: 'goods',
+  component: Goods,
+  meta: {
+    keepAlive: true
+  }
+},
+------------------------
+&lt;keep-alive&gt;
+  &lt;router-view v-if=&quot;$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+&lt;/keep-alive&gt;
+&lt;router-view v-if=&quot;!$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+</code></pre><br />
+这两个是 if 是为了 所有组件的呈现。如果没有第二个，说明你不想 无法缓存的组件出现了.</li>
+</ul></article></body></html>

@@ -84,3 +84,20 @@ import 'common/stylus/test.css';
     <button @click="handleBool">test</button>
   </div>
 ```
+* 更为酷炫的是： 路由里面的缓存保留。 -- 目测应该常用于 登录注册。 (很关键的功能)
+```
+{
+  path: '/goods',
+  name: 'goods',
+  component: Goods,
+  meta: {
+    keepAlive: true
+  }
+},
+------------------------
+<keep-alive>
+  <router-view v-if="$route.meta.keepAlive"></router-view>
+</keep-alive>
+<router-view v-if="!$route.meta.keepAlive"></router-view>
+```
+这两个是 if 是为了 所有组件的呈现。如果没有第二个，说明你不想 无法缓存的组件出现了.
