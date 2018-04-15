@@ -71,3 +71,16 @@ import 'common/stylus/test.css';
       transform: scaleY(0.5)
       background-color: red
 ```
+
+#### 5.keepAlive 的学习和使用
+> 今天学习了下这个 组件缓存 的功能。简单地来说，可以使用在 input 的信息保留上。
+
+* 普通组件的 信息保留。 ----   当 v-if 切换的时候，通过注释的地方可以保留信息。
+```
+  <div>
+    <!-- <keep-alive include="test-keep-alive"> -->
+      <test-keep-alive v-if="bool"></test-keep-alive>
+    <!-- </keep-alive> -->
+    <button @click="handleBool">test</button>
+  </div>
+```
