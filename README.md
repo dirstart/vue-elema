@@ -101,3 +101,16 @@ import 'common/stylus/test.css';
 <router-view v-if="!$route.meta.keepAlive"></router-view>
 ```
 这两个是 if 是为了 所有组件的呈现。如果没有第二个，说明你不想 无法缓存的组件出现了.
+
+
+#### 6.配置修改出现了一个问题
+> host: '0.0.0.0', // can be overwritten by process.env.HOST
+
+本意是希望能够也在手机端浏览。造成的麻烦是每次都默认打开了  0.0.0.0 页面报错，还需要手动置回  localhost 才能对，花费了一次时间。
+
+当前解决方案： 先配置回去 `host: process.env.HOST`
+此后若是需要手机调试，其实也可以：  npm run dev
+
+
+#### 7.`git checkout -`  (gay特踹克奥特杠)切换到上一条分支！！！ 太好用了！ 跟 Sublime 的`Ctrl + Tab` 异曲同工。记住了！！！
+
