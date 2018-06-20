@@ -24,7 +24,7 @@ export default {
   components: {
     SfHeader: header
   },
-  // 定义成函数的原因其实是 闭包！ 如果定义成对象就不好复用了
+  // 定义成函数的原因其实是 闭包！ 如果定义成对象复用就容易产生冲突而且不安全
   data () {
     return {
       seller: {}

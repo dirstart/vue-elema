@@ -39,7 +39,7 @@ https://www.imooc.com/qadetail/229672?lastmedia=1
 'common': path.resolve(__dirname, '../src/common')
 ```
 
-#### 3.严重： sylus 无法引入 字体文件
+#### 3.严重： stylus 无法引入 字体文件
 原引用方式(失败的方式，修改原来的 css 为 styl 文件)：猜测可能是 webpack 中 stylus 需要相关配置？  --------------  `style` 下引用
 ```
 <style lang="stylus" ref="stylesheet/stylus">
