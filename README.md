@@ -114,3 +114,11 @@ import 'common/stylus/test.css';
 
 #### 7.`git checkout -`  (gay特踹克奥特杠)切换到上一条分支！！！ 太好用了！ 跟 Sublime 的`Ctrl + Tab` 异曲同工。记住了！！！
 
+
+
+* * *
+
+
+#### 可优化
+
+* 1.代码的前后台交互中嵌套过多，可以优化  res.data.data => res.data 之类的。

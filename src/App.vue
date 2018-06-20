@@ -33,8 +33,9 @@ export default {
   async created () {
     const me = this;
     const res = await me.axios.get('/api/seller');
-    this.seller = res.data.data;
-    console.log('test', this.seller);
+    // 这里可以加上 if res.data.errno === 0
+    me.seller = res.data.data || {};
+    console.log(me.seller);
   }
 };
 </script>
