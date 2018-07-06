@@ -115,6 +115,20 @@ import 'common/stylus/test.css';
 #### 7.`git checkout -`  (gay特踹克奥特杠)切换到上一条分支！！！ 太好用了！ 跟 Sublime 的`Ctrl + Tab` 异曲同工。记住了！！！
 
 
+#### 8.关于`display: block` 和`display: inline-block`的区别。
+> 使用 `display: block` 会出现子层父层边距合并的问题。即是说，父层无`margin-top`，子层有，则父层也会有`margin-top`，采用 `display: inlne-block` 因为其 BFC 特性则 => 子层相对于父层产生边距，父层对外无边距。
+
+![](https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block%E5%92%8Cblock1.png)
+
+![](https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block%E5%92%8Cblock2.png)
+
+![](https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block%E5%92%8Cblock3.png)
+
+![](https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block%E5%92%8Cblock4.png)
+
+#### 9.Chrome调试，若要获取拥有某一个类名的元素。
+> $$('[htmlTag].[className]')，例如：  `$$('div.content-wrap')`
+
 
 * * *
 
