@@ -38,6 +38,7 @@
           <h1 class="name">
             {{seller.name}}
           </h1>
+          <sf-star :size="48" :score="4.8"/>
         </div>
       </div>
       <div class="detail-close">
@@ -48,11 +49,16 @@
 </template>
 
 <script>
+import star from '@/components/star/star.vue';
+
 export default {
   props: {
     seller: {
       type: Object
     }
+  },
+  components: {
+    SfStar: star
   },
   data () {
     return {
