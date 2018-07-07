@@ -99,7 +99,7 @@ export default {
             width 30px
             height 18px
             vertical-align top
-            bg-image('brand')
+            bg-image('./img/brand')
             background-size 30px 18px
             background-repeat no-repeat
           .name
@@ -120,15 +120,15 @@ export default {
             background-size 12px 12px
             background-repeat no-repeat
             &.decrease
-              bg-image('decrease_1')
+              bg-image('./img/decrease_1')
             &.discount
-              bg-image('discount_1')
+              bg-image('./img/discount_1')
             &.guarantee
-              bg-image('guarantee_1')
+              bg-image('./img/guarantee_1')
             &.invoice
-              bg-image('invoice_1')
+              bg-image('./img/invoice_1')
             &.special
-              bg-image('special_1')
+              bg-image('./img/special_1')
           .text
             font-size 10px
             line-height 12px
@@ -163,7 +163,7 @@ export default {
         vertical-align top
         width 22px
         height 12px
-        bg-image('bulletin')
+        bg-image('./img/bulletin')
         backgournd-repeat no-repeat
         background-size 22px 12px
       .bulletin-text
