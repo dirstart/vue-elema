@@ -38,7 +38,14 @@
           <h1 class="name">
             {{seller.name}}
           </h1>
-          <sf-star :size="48" :score="4.8"/>
+          <div class="star-wrap">
+            <sf-star :size="48" :score="3"/>
+          </div>
+          <div class="title-wrap">
+            <div class="line"></div>
+            <div class="title">优惠信息</div>
+            <div class="line"></div>
+          </div>
         </div>
       </div>
       <div class="detail-close">
@@ -211,6 +218,22 @@ export default {
             text-align center
             font-size 16px
             font-weight 700
+          .star-wrap
+            margin 16px 0
+            text-align center
+          .title-wrap
+            display flex
+            margin 30px auto 24px auto
+            width 80%
+            .line
+              position relative
+              flex: 1
+              top -6px
+              border-bottom 1px solid rgba(255, 255, 255, .2)
+            .title
+              padding 0 12px
+              font-size 12px
+
       .detail-close
         position relative
         width 32px
