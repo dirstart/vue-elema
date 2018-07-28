@@ -136,6 +136,25 @@ import 'common/stylus/test.css';
 * `v-show`代表着该 DOM 元素是渲染的。改变的只是元素的 `display` 属性.
 > 如果较少切换，只在第一次运行的时候使用到，可以用 v-if.
 
+#### 11.解决`css-loader`对图片静态资源的绝对路径 url方式 引用的办法 -- 修改 vue-cli 中 webpack 的配置
+```
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    sourceMap: options.sourceMap,
+    root: path.resolve(__dirname, '../static'),
+    url: true,
+    alias: {
+      '@': path.resolve(__dirname, '../static')
+    },
+    import: false,
+    modules: false,
+    minimize: true,
+    sourceMap: true,
+    camelCase: false,
+  }
+}
+```
 
 * * *
 

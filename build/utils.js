@@ -14,11 +14,22 @@ exports.assetsPath = function (_path) {
 
 exports.cssLoaders = function (options) {
   options = options || {}
+  console.log('options', options);
 
   const cssLoader = {
     loader: 'css-loader',
     options: {
-      sourceMap: options.sourceMap
+      sourceMap: options.sourceMap,
+      root: path.resolve(__dirname, '../static'),
+      url: true,
+      alias: {
+        '@': path.resolve(__dirname, '../static')
+      },
+      import: false,
+      modules: false,
+      minimize: true,
+      sourceMap: true,
+      camelCase: false,
     }
   }
 

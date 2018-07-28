@@ -12,6 +12,8 @@
       I'm content.
     </div>
     <router-view></router-view>
+    <img src="@/xxx.jpg" alt="">
+    <!-- <div class="test"></div> -->
   </div>
 </template>
 
@@ -57,4 +59,8 @@ export default {
         color: rgb(77, 85, 93)
         &.active
           color: rgb(240, 20, 20)
+  .test
+    width 100px
+    height 100px
+    background url('~@/xxx.jpg')
 </style>
