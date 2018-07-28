@@ -12,8 +12,6 @@
       I'm content.
     </div>
     <router-view></router-view>
-    <img src="@/xxx.jpg" alt="">
-    <!-- <div class="test"></div> -->
   </div>
 </template>
 
@@ -29,7 +27,8 @@ export default {
   // 定义成函数的原因其实是 闭包！ 如果定义成对象复用就容易产生冲突而且不安全
   data () {
     return {
-      seller: {}
+      seller: {},
+      test: `img/xxx.jpg`
     };
   },
   async created () {
@@ -59,8 +58,4 @@ export default {
         color: rgb(77, 85, 93)
         &.active
           color: rgb(240, 20, 20)
-  .test
-    width 100px
-    height 100px
-    background url('~@/xxx.jpg')
 </style>
