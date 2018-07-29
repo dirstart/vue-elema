@@ -161,7 +161,7 @@ const cssLoader = {
 <img src="~common/xxx.jpg" alt="" width="100px" height="100px">
 <img :src="params" alt="">
 ```
-* 前者采用 ~common 的alias绝对方法引入 ！！！！！！！！！！！
+* 前者采用 ~common 的alias方法引入 ！！！！！！！！！！！
 * 后者应该用 线上的地址。 否则怎么搞都是错的！！！！！！！！！
 
 * * *

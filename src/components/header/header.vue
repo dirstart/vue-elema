@@ -46,6 +46,12 @@
             <div class="title">优惠信息</div>
             <div class="line"></div>
           </div>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
+              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+              <span class="text">{{seller.supports[index].description}}</span>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="detail-close">
@@ -232,7 +238,39 @@ export default {
               border-bottom 1px solid rgba(255, 255, 255, .2)
             .title
               padding 0 12px
+              font-weight 700
               font-size 12px
+          .supports
+            width 80%
+            margin 0 auto
+            .support-item
+              padding 0 12px
+              margin-bottom 12px
+              font-size 0
+              &:last-child
+                margin-bottom 0
+              .icon
+                margin-right 6px
+                background yellow
+                width 16px
+                height 16px
+                display inline-block
+                background-size 16px 16px
+                background-repeat no-repeat
+                vertical-align top
+                &.decrease
+                  bg-image('./img/decrease_2')
+                &.discount
+                  bg-image('./img/discount_2')
+                &.guarantee
+                  bg-image('./img/guarantee_2')
+                &.invoice
+                  bg-image('./img/invoice_2')
+                &.special
+                  bg-image('./img/special_2')
+              .text
+                font-size 12px
+                line-height 16px
 
       .detail-close
         position relative
