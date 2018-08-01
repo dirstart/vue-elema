@@ -30,38 +30,43 @@
     <div class="background">
       <img :src="seller.avatar" width="100%" height="100%"/>
     </div>
-    <div class="detail"
-      v-show="detailShow"
-    >
-      <div class="detail-wrap clearfix">
-        <div class="detail-main">
-          <h1 class="name">
-            {{seller.name}}
-          </h1>
-          <div class="star-wrap">
-            <sf-star :size="48" :score="3"/>
+    <transition name="fade">
+      <div class="detail"
+        v-show="detailShow"
+      >
+        <div class="detail-wrap clearfix">
+          <div class="detail-main">
+            <h1 class="name">
+              {{seller.name}}
+            </h1>
+            <div class="star-wrap">
+              <sf-star :size="48" :score="3"/>
+            </div>
+            <sf-divider></sf-divider>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
+                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                <span class="text">{{seller.supports[index].description}}</span>
+              </li>
+            </ul>
+            <sf-divider title="商家公告"></sf-divider>
+            <div class="bulletin">
+              <p class="content">
+                {{seller.bulletin}}
+              </p>
+            </div>
           </div>
-          <div class="title-wrap">
-            <div class="line"></div>
-            <div class="title">优惠信息</div>
-            <div class="line"></div>
-          </div>
-          <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
-              <span class="icon" :class="classMap[seller.supports[index].type]"></span>
-              <span class="text">{{seller.supports[index].description}}</span>
-            </li>
-          </ul>
+        </div>
+        <div class="detail-close">
+          <i class="icon-close" @click="hideDetail"></i>
         </div>
       </div>
-      <div class="detail-close">
-        <i class="icon-close"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import MaskDivider from './MaskDivider';
 import star from '@/components/star/star.vue';
 
 export default {
@@ -71,7 +76,8 @@ export default {
     }
   },
   components: {
-    SfStar: star
+    SfStar: star,
+    SfDivider: MaskDivider
   },
   data () {
     return {
@@ -86,6 +92,9 @@ export default {
   methods: {
     showDetail () {
       this.detailShow = true;
+    },
+    hideDetail () {
+      this.detailShow = false;
     }
   }
 };
@@ -210,8 +219,14 @@ export default {
       height 100%
       overflow auto
       z-index 100
-      background-color rgba(7, 17, 27, 0.8)
-      opacity 1
+      opacity: 1
+      background: rgba(7, 17, 27, 0.8)
+      transition all 0.5s
+      &.fade-enter-active, &.fade-leave-active
+        transition: all 0.5s
+      &.fade-enter, &.fade-leave-active
+        opacity: 0
+        background: rgba(7, 17, 27, 0)
       .detail-wrap
         display inline-block
         min-height 100%
@@ -227,19 +242,6 @@ export default {
           .star-wrap
             margin 16px 0
             text-align center
-          .title-wrap
-            display flex
-            margin 30px auto 24px auto
-            width 80%
-            .line
-              position relative
-              flex: 1
-              top -6px
-              border-bottom 1px solid rgba(255, 255, 255, .2)
-            .title
-              padding 0 12px
-              font-weight 700
-              font-size 12px
           .supports
             width 80%
             margin 0 auto
@@ -271,7 +273,13 @@ export default {
               .text
                 font-size 12px
                 line-height 16px
-
+          .bulletin
+            width 80%
+            margin 0 auto
+            .content
+              padding 0 12px
+              line-height 24px
+              font-size 12px
       .detail-close
         position relative
         width 32px

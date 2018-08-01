@@ -164,6 +164,16 @@ const cssLoader = {
 * 前者采用 ~common 的alias方法引入 ！！！！！！！！！！！
 * 后者应该用 线上的地址。 否则怎么搞都是错的！！！！！！！！！
 
+#### 13.渐变效果学习
+```
+transition all 0.5s
+&.fade-enter-active, &.fade-leave-active
+  transition: all 0.5s
+&.fade-enter, &.fade-leave-active
+  opacity: 0
+  background: rgba(7, 17, 27, 0)
+```
+
 * * *
 
 
