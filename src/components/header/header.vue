@@ -222,9 +222,12 @@ export default {
       opacity: 1
       background: rgba(7, 17, 27, 0.8)
       transition all 0.5s
-      &.fade-enter-active, &.fade-leave-active
+      -webkit-backdrop-filter blur(10px)
+      &.fade-enter-active,
+      &.fade-leave-active
         transition: all 0.5s
-      &.fade-enter, &.fade-leave-active
+      &.fade-enter,
+      &.fade-leave-active
         opacity: 0
         background: rgba(7, 17, 27, 0)
       .detail-wrap
@@ -280,6 +283,7 @@ export default {
               padding 0 12px
               line-height 24px
               font-size 12px
+              text-indent 24px
       .detail-close
         position relative
         width 32px

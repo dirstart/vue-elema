@@ -8,9 +8,6 @@
       <router-link to="/ratings" tag="li" class="tab-item">评价</router-link>
       <router-link to="/seller" tag="li" class="tab-item">商家</router-link>
     </ul>
-    <div class="content">
-      I'm content.
-    </div>
     <router-view></router-view>
   </div>
 </template>
