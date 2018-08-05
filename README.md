@@ -171,6 +171,14 @@ transition all 0.5s
   background: rgba(7, 17, 27, 0)
 ```
 
+#### 14.除了设置固定高度以外如何让 overflow: hiden/sroll 生效？
+通过设置 绝对定位 和 top 和 right
+```
+position: absolute;
+top: 174px;
+bottom: 37px;
+```
+
 * * *
 
 

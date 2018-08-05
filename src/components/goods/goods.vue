@@ -8,15 +8,38 @@
           class="menu-item"
           @click="menuItemClick">
             <div class="item-info border-1px">
-              <span v-show="item.type > 0" class="item-icon" :class="classMap[item.type]">
-              </span>
+              <span v-show="item.type > 0" class="item-icon" :class="classMap[item.type]"></span>
               {{item.name}}
-              <!-- <span class="item-text">{{item.name}}</span> -->
             </div>
         </li>
       </ul>
     </div>
-    <div class="content">sdd</div>
+    <div class="content">
+      <ul class="cat-wrap">
+        <li v-for="(item, index) in goods" :key="index" class="cat-item">
+          <h1 class="cat-title">{{item.name}}</h1>
+          <ul class="cat-content">
+            <li v-for="(food, index) in item.foods" :key="index" class="food-item">
+              <div class="foods-icon-wrap">
+                <img :src="food.icon || ''" alt="" class="food-icon">
+              </div>
+              <div class="foods-content">
+                <h2 class="name">{{food.name}}</h2>
+                <p class="desc">{{food.desc}}</p>
+                <div class="extra">
+                  <span>月售{{food.sellCount}}</span>
+                  <span>好评率{{food.rating}}%</span>
+                </div>
+                <div class="price">
+                  <span>￥{{food.price}}</span>
+                  <span v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -65,7 +88,12 @@ export default {
   @import "../../common/stylus/base.styl"
 
 .goods-wrap
-  display flex
+  display: flex
+  position: absolute
+  top: 174px
+  bottom: 46px
+  width: 100%
+  overflow: hidden
   .sidebar
     flex 0 0 80px
     width 80px
