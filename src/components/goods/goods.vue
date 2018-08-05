@@ -8,7 +8,8 @@
           class="menu-item"
           @click="menuItemClick">
             <div class="item-info border-1px">
-              <span v-show="item.type > 0" class="item-icon"></span>
+              <span v-show="item.type > 0" class="item-icon" :class="classMap[item.type]">
+              </span>
               {{item.name}}
               <!-- <span class="item-text">{{item.name}}</span> -->
             </div>
@@ -36,7 +37,8 @@ export default {
   data () {
     return {
       goods: [],
-      listHeight: []
+      listHeight: [],
+      classMap: []
     };
   },
   methods: {
@@ -59,6 +61,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../common/stylus/mixin.styl"
+  @import "../../common/stylus/base.styl"
+
 .goods-wrap
   display flex
   .sidebar
@@ -82,9 +87,7 @@ export default {
         width 56px
         vertical-align middle
         font-size 12px
-        border-bottom 1px solid #eee
-        // border 1px solid #08e
-        // border-1px(rgba(7, 17, 27, 0.1))
+        border-1px(rgba(7, 17, 27, .1))
         .item-icon
           display inline-block
           vertical-align top
@@ -93,7 +96,16 @@ export default {
           margin-right 2px
           background-size 12px 12px
           background-repeat no-repeat
-          background-color #0923ff
+          &.decrease
+            bg-image('./img/decrease_3')
+          &.discount
+            bg-image('./img/discount_3')
+          &.special
+            bg-image('./img/special_3')
+          &.invoice
+            bg-image('./img/invoice_3')
+          &.guarantee
+            bg-image('./img/guarantee_3')
   .content
     flex 1
     color #089e8a
