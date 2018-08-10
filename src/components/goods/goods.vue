@@ -15,20 +15,20 @@
       </ul>
     </div>
     <div class="content">
-      <ul class="cat-wrap">
+      <ul class="cat-list">
         <li v-for="(item, index) in goods" :key="index" class="cat-item">
-          <h1 class="cat-title">{{item.name}}</h1>
-          <ul class="cat-content">
+          <h1 class="food-title">{{item.name}}</h1>
+          <ul class="food-list">
             <li v-for="(food, index) in item.foods" :key="index" class="food-item">
-              <div class="foods-icon-wrap">
+              <div class="food-icon-wrap">
                 <img :src="food.icon || ''" alt="" class="food-icon">
               </div>
-              <div class="foods-content">
+              <div class="food-content">
                 <h2 class="name">{{food.name}}</h2>
                 <p class="desc">{{food.desc}}</p>
                 <div class="extra">
-                  <span>月售{{food.sellCount}}</span>
-                  <span>好评率{{food.rating}}%</span>
+                  <span class="count">月售{{food.sellCount}}</span>
+                  <span class="">好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
                   <span>￥{{food.price}}</span>
@@ -97,7 +97,7 @@ export default {
   .sidebar
     flex 0 0 80px
     width 80px
-    color #093
+    background: #f3f5f7
     .menu-item
       display table
       width 56px
@@ -108,7 +108,7 @@ export default {
         position relative
         margin-top -1px
         z-index 10
-        background #eee
+        background #fff
         font-weight 700
       .item-info
         display: table-cell
@@ -136,5 +136,48 @@ export default {
             bg-image('./img/guarantee_3')
   .content
     flex 1
-    color #089e8a
+    .cat-list
+    .cat-item
+      .food-title
+        padding-left 14px
+        height 26px
+        line-height 26px
+        border-left 2px solid #45c178
+        font-size 12px
+        color rgb(147, 153, 159)
+        background #f3f5f7
+      .food-list
+        .food-item
+          display flex
+          margin 18px
+          padding-bottom 18px
+          border-1px(rgba(7, 17, 27, 0.1))
+          &:last-child
+            margin-bottom 0
+            border-none()
+          .food-icon-wrap
+            flex 0 0 57px
+            margin-right 10px
+            img
+              width 57px
+              height 57px
+              background-size cover
+          .food-content
+            flex 1
+            .name
+              margin 2px 0 8px 0
+              height 14px
+              font-size 14px
+              color #07111b
+            .desc
+              margin-bottom 8px
+              line-height 20px
+              color rgb(147, 153, 169)
+              font-size 10px
+            .extra
+              color #333
+              line-height 10px
+              .count
+                margin-right 12px
+
 </style>

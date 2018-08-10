@@ -3,12 +3,15 @@ border-1px($color)
   &:after
     content: ''
     display: block
-    background-color: #f0f0f0
     position: absolute
     width: 100%
     left: 0
     bottom: 0
     border-top: 1px solid $color
+
+border-none()
+  &:after
+    display none
 
 bg-image($url)
   background-image: url($url + '@2x.png')

@@ -179,6 +179,16 @@ top: 174px;
 bottom: 37px;
 ```
 
+#### 15.`background-size: container` 和 `background-size: cover` 的区别
+> 作用原理基本相同。都是将图片缩放以适应整个容器的宽高。(图片的宽高比没有改变)
+
+* no-repeat 的情况下
+    - cover 铺满容器，多出的部分被裁掉 => 委曲求全          => 成全
+    - contain 容器内至少有一张完整的图 => 拼尽全力，全身而进 => 强扭的瓜
+* repeat 的情况下
+    - cover 与上述相同
+    - contain 平铺。(想起 XP 时代的桌面背景了吗。。简直就是儿时的回忆)
+
 * * *
 
 
