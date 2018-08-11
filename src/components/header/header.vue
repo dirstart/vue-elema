@@ -106,7 +106,7 @@ export default {
   .header
     position relative
     color #fff
-    background rgba(7, 17, 27, 0.5)
+    background rgba(7, 17, 27, 0.4)
     overflow hidden
     .content-wrap
       position relative

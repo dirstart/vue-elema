@@ -22,6 +22,12 @@
 这个拿不到数据：`http://localhost:8080/#/api/seller`
 下面这个可以： `http://localhost:8080/api/seller`
 
+### 问题未解决！
+
+#### 1.左侧分类栏点击 => 触发右边滚动 => 触发 currentIndex 变化 => 到第 4/5 的时候 currentIndex 出错。
+
+* * *
+
 ### 踩坑实录
 
 #### 1.关于 localhost:8080/#/ 和 localhost:8080 的区别
@@ -190,6 +196,9 @@ bottom: 37px;
     - contain 平铺。(想起 XP 时代的桌面背景了吗。。简直就是儿时的回忆)
 
 * * *
+
+#### 16.关于 better-scroll 这个组件
+> 实际上当使用这个组件之后，系统默认的 onClick 就会被屏蔽掉.
 
 
 #### 可优化

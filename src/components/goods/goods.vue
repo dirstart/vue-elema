@@ -1,12 +1,12 @@
 <template>
   <div class="goods-wrap">
-    <div class="sidebar">
+    <div class="sidebar" ref="sidebarEl">
       <ul class="menu-list">
         <li v-for="(item,index) in goods"
           :key="index"
           :class="{'current': currentIndex === index}"
           class="menu-item"
-          @click="menuItemClick">
+          @click="_selectCat(index, $event)">
             <div class="item-info border-1px">
               <span v-show="item.type > 0" class="item-icon" :class="classMap[item.type]"></span>
               {{item.name}}
@@ -14,12 +14,19 @@
         </li>
       </ul>
     </div>
-    <div class="content">
+    <div class="content" ref="contentEl">
       <ul class="cat-list">
-        <li v-for="(item, index) in goods" :key="index" class="cat-item">
+        <li v-for="(item, index) in goods"
+          :key="index"
+          class="cat-item"
+          ref="catList"
+        >
           <h1 class="food-title">{{item.name}}</h1>
           <ul class="food-list">
-            <li v-for="(food, index) in item.foods" :key="index" class="food-item">
+            <li v-for="(food, index) in item.foods"
+              :key="index"
+              class="food-item"
+            >
               <div class="food-icon-wrap">
                 <img :src="food.icon || ''" alt="" class="food-icon">
               </div>
@@ -28,11 +35,11 @@
                 <p class="desc">{{food.desc}}</p>
                 <div class="extra">
                   <span class="count">月售{{food.sellCount}}</span>
-                  <span class="">好评率{{food.rating}}%</span>
+                  <span @click="console.log(12)">好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
-                  <span>￥{{food.price}}</span>
-                  <span v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                  <span class="now">￥{{food.price}}</span>
+                  <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
               </div>
             </li>
@@ -44,6 +51,8 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll';
+
 export default {
   async created () {
     const me = this;
@@ -55,30 +64,75 @@ export default {
       return;
     }
     me.goods = data.data;
-    console.log('goods', me.goods);
+    me.$nextTick(() => {
+      me._initScroll();
+      me._calculateHeight();
+    });
   },
   data () {
     return {
       goods: [],
-      listHeight: [],
-      classMap: []
+      // 为了实现 better-scroll联动的效果=>需要计算每个 cat-list 的高度
+      catHeight: [],
+      classMap: [],
+      scrollY: 0,
     };
-  },
-  methods: {
-    menuItemClick () {
-      console.log('click');
-    }
   },
   computed: {
     currentIndex () {
-      // 厉害了，这个当前高亮的会根据滚动条的来判断，应该不简单.
-      for (let i = 0; i < this.listHeight.length; i++) {
-        let h1 = this.listHeight[i];
-        // 以后再写这个
-        console.log(h1);
+      for (let i = 0; i < this.catHeight.length; i++) {
+        let h1 = this.catHeight[i];
+        let h2 = this.catHeight[i + 1];
+        // 计算出当前的右侧高度在哪个区间
+        if (!h2 || (this.scrollY >= h1 && this.scrollY < h2)) {
+          // 这里还要确定是 右侧用户手动触发的 还是 通过左侧影响触发的
+          // this._followScroll(i);
+          return i;
+        }
       }
-      return 3;
+      return 0;
     }
+  },
+  methods: {
+    _initScroll () {
+      this.sidebarScroll = new BScroll(this.$refs.sidebarEl, {
+        click: true
+      });
+      this.contentScroll = new BScroll(this.$refs.contentEl, {
+        probeType: 3
+      });
+
+      this.contentScroll.on('scroll', (pos) => {
+        this.scrollY = pos.y <= 0 ? Math.abs(Math.round(pos.y)) : pos;
+      });
+    },
+    // 根据右侧菜单的滚动 => 高亮左侧分类按钮
+    _calculateHeight () {
+      const me = this;
+      let height = 0;
+      let catList = me.$refs.catList;
+
+      me.catHeight.push(height);
+      for (let i = 0; i < catList.length; i++) {
+        height += catList[i].clientHeight;
+        me.catHeight.push(height);
+      }
+    },
+    // 通过选择左侧分类按钮 => 滚动右侧菜单
+    _selectCat (index, event) {
+      if (!event._constructed) {
+        return;
+      }
+
+      let scrollEl = this.$refs.catList[index];
+      this.contentScroll.scrollToElement(scrollEl, 300);
+      console.log('index', index, '-', 'currentIndex', this.currentIndex);
+      setTimeout(() => console.log('now', this.currentIndex), 1000);
+    },
+    // _followScroll (index) {
+    //   let scrollEl = this.$refs.catList[index];
+    //   this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
+    // }
   }
 };
 </script>
@@ -175,9 +229,20 @@ export default {
               color rgb(147, 153, 169)
               font-size 10px
             .extra
-              color #333
               line-height 10px
+              font-size 10px
+              color #93999f
               .count
                 margin-right 12px
+            .price
+              line-height 24px
+              font-size 14px
+              .now
+                margin-right 8px
+                color #f01414
+              .old
+                font-size 10px
+                text-decoration line-through
+                color: rgb(147, 153, 159)
 
 </style>
