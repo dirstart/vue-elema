@@ -25,6 +25,9 @@
 ### 问题未解决！
 
 #### 1.左侧分类栏点击 => 触发右边滚动 => 触发 currentIndex 变化 => 到第 4/5 的时候 currentIndex 出错。
+> 已解决，问题源于 better-scoll 1px 的计算偏差。 第五个tab的边界值为1757，而better-scroll计算为1756
+
+解决方案： 在 currentIndex 的判断处 `+1px`.(未找到计算偏差原因，经测试不是 border 问题)
 
 * * *
 

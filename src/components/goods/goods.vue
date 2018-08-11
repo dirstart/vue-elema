@@ -3,9 +3,10 @@
     <div class="sidebar" ref="sidebarEl">
       <ul class="menu-list">
         <li v-for="(item,index) in goods"
+          ref="menuList"
           :key="index"
-          :class="{'current': currentIndex === index}"
           class="menu-item"
+          :class="{'current': currentIndex === index}"
           @click="_selectCat(index, $event)">
             <div class="item-info border-1px">
               <span v-show="item.type > 0" class="item-icon" :class="classMap[item.type]"></span>
@@ -84,9 +85,11 @@ export default {
         let h1 = this.catHeight[i];
         let h2 = this.catHeight[i + 1];
         // 计算出当前的右侧高度在哪个区间
-        if (!h2 || (this.scrollY >= h1 && this.scrollY < h2)) {
+        if (!h2 || (this.scrollY + 1 >= h1 && this.scrollY + 1 < h2)) {
           // 这里还要确定是 右侧用户手动触发的 还是 通过左侧影响触发的
-          // this._followScroll(i);
+          console.log('这里是多少', i, this.scrollY);
+          console.log('高度区间', this.catHeight);
+          this._followScroll(i);
           return i;
         }
       }
@@ -99,7 +102,8 @@ export default {
         click: true
       });
       this.contentScroll = new BScroll(this.$refs.contentEl, {
-        probeType: 3
+        probeType: 3,
+        click: true
       });
 
       this.contentScroll.on('scroll', (pos) => {
@@ -123,16 +127,13 @@ export default {
       if (!event._constructed) {
         return;
       }
-
       let scrollEl = this.$refs.catList[index];
-      this.contentScroll.scrollToElement(scrollEl, 300);
-      console.log('index', index, '-', 'currentIndex', this.currentIndex);
-      setTimeout(() => console.log('now', this.currentIndex), 1000);
+      this.contentScroll.scrollToElement(scrollEl, 1000);
     },
-    // _followScroll (index) {
-    //   let scrollEl = this.$refs.catList[index];
-    //   this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
-    // }
+    _followScroll (index) {
+      let scrollEl = this.$refs.menuList[index];
+      this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
+    }
   }
 };
 </script>
