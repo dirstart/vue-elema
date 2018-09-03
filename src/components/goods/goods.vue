@@ -36,7 +36,7 @@
                 <p class="desc">{{food.desc}}</p>
                 <div class="extra">
                   <span class="count">月售{{food.sellCount}}</span>
-                  <span @click="console.log(12)">好评率{{food.rating}}%</span>
+                  <span>好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
                   <span class="now">￥{{food.price}}</span>
@@ -48,11 +48,19 @@
         </li>
       </ul>
     </div>
+    <shop-cart></shop-cart>
   </div>
 </template>
 
+/*
+ *  是左边引发了右边，还是右边带动了左边？
+ *  1.左边 => 引发了右边 => content 滚动 => 计算滚动高度 =>
+ *    => 修改 currentIndex => 进而触发左边的滚动 bar
+ *   左边、永远会比右边慢一拍。
+ */
 <script>
 import BScroll from 'better-scroll';
+import ShopCart from '@/components/shopcart/ShopCart.vue';
 
 export default {
   async created () {
@@ -76,7 +84,7 @@ export default {
       // 为了实现 better-scroll联动的效果=>需要计算每个 cat-list 的高度
       catHeight: [],
       classMap: [],
-      scrollY: 0,
+      scrollY: 0
     };
   },
   computed: {
@@ -87,14 +95,15 @@ export default {
         // 计算出当前的右侧高度在哪个区间
         if (!h2 || (this.scrollY + 1 >= h1 && this.scrollY + 1 < h2)) {
           // 这里还要确定是 右侧用户手动触发的 还是 通过左侧影响触发的
-          console.log('这里是多少', i, this.scrollY);
-          console.log('高度区间', this.catHeight);
           this._followScroll(i);
           return i;
         }
       }
       return 0;
     }
+  },
+  components: {
+    ShopCart
   },
   methods: {
     _initScroll () {
@@ -128,11 +137,12 @@ export default {
         return;
       }
       let scrollEl = this.$refs.catList[index];
-      this.contentScroll.scrollToElement(scrollEl, 1000);
+      this.contentScroll.scrollToElement(scrollEl, 300);
     },
     _followScroll (index) {
       let scrollEl = this.$refs.menuList[index];
       this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
+      // this.sidebarScroll.scrollToElement(scrollEl, 0);
     }
   }
 };
