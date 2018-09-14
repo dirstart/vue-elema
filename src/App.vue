@@ -8,7 +8,7 @@
       <router-link to="/ratings" tag="li" class="tab-item">评价</router-link>
       <router-link to="/seller" tag="li" class="tab-item">商家</router-link>
     </ul>
-    <router-view></router-view>
+    <router-view :seller=seller></router-view>
   </div>
 </template>
 

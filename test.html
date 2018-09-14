@@ -5,13 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
   <style>
+    ul {
+      position: relative;
+      margin-top: 100px;
+      width: 400px;
+      height: 600px;
+      background: #089e8a;
+      overflow-y: scroll;
+    }
+    li {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 10px;
+      background: #6c9;
+    }
+
+    div {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+    }
+
+    a {
+      width: 100px;
+      height: 40px;
+      line-height: 40px;
+      background: #089e8a;
+      display: block;
+      border: 1px solid #000;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+    }
     a:hover {
-      background-color: yellow;
+      background: #590;
+    }
+    body {
+      background: #000;
     }
   </style>
 </head>
 <body>
-  <a>just test</a>
+  <ul>
+    <li id="1">1</li>
+    <li id="2">2</li>
+    <li id="3">3</li>
+    <li id="4">4</li>
+  </ul>
+
+  <div>
+    <a href="#1">1</a>
+    <a href="#2">2</a>
+    <a href="#3">3</a>
+    <a href="#4">4</a>
+  </div>
 </body>
+<script>
+  $().ready(function () {
+    let anchorArray = $("a");
+    let targetArray = $("li");
+    for (let i = 0; i < anchorArray.length; i++) {
+      $(anchorArray[i]).attr("value", Math.round($(targetArray[i]).position().top));
+    }
+    for (let i = 0; i < anchorArray.length; i++) {
+      $(anchorArray[i]).click(function () {
+        for (let i = 0; i < anchorArray.length; i++) {
+          $(anchorArray[i]).css("color", "#fff");
+        } 
+        $(anchorArray[i]).css("color", "#f60");
+        $("ul").animate({
+          scrollTop: $(anchorArray[i]).attr("value")
+        }, 300);
+      });
+    }
+
+    $("ul").scroll(function () {
+      let height = $("ul").scrollTop();
+      let index;
+      for (let i = 0; i < anchorArray.length - 1; i++) {
+        let min = $(anchorArray[i]).attr("value");
+        let max = $(anchorArray[i+1]).attr("value");
+        if (height >= min && height < max) {
+          index = i;
+          break;
+        }
+      }
+
+      console.log(index);
+      for (let i = 0; i < anchorArray.length; i++) {
+        $(anchorArray[i]).css("color", "#ccc");
+      }
+      $(anchorArray[index]).css("color", "#f60");
+    })
+  })
+</script>
 </html>

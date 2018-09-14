@@ -48,7 +48,7 @@
         </li>
       </ul>
     </div>
-    <shop-cart></shop-cart>
+    <shop-cart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shop-cart>
   </div>
 </template>
 
@@ -73,10 +73,16 @@ export default {
       return;
     }
     me.goods = data.data;
+    console.log("seller", this.seller);
     me.$nextTick(() => {
       me._initScroll();
       me._calculateHeight();
     });
+  },
+  props: {
+    seller: {
+      type: Object
+    }
   },
   data () {
     return {

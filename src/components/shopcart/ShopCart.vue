@@ -4,24 +4,83 @@
       <div class="left">
         <div class="icon-wrap">
           <i class="icon">
+            <!-- 下面这个也要加个 class -->
             <i class="icon-shopping_cart"></i>
           </i>
         </div>
-        <div class="price">￥0</div>
-        <div class="desc">另需配送费￥10元</div>
+        <div class="price">￥{{totalPrice}}</div>
+        <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <div class="pay" :class="payClass">
+          {{payDesc}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    // 思考过程，该组件的商品价值是由 父元素 goods 的选择来决定的，所以需要一个对象来保存选择的价格们
+    selectFood: {
+      type: Array,
+      default () {
+        return [
+          {
+            price: 1,
+            count: 3
+          }
+        ];
+      }
+    },
+    deliveryPrice: {
+      type: Number,
+      default: 0
+    },
+    minPrice: {
+      type: Number,
+      default: 0
+    }
+  },
   data () {
     return {};
   },
   components: {},
-  computed: {},
+  computed: {
+    // 返回总价
+    totalPrice () {
+      let total = 0;
+      this.selectFood.forEach(food => {
+        total += food.price * food.count;
+      });
+      return total;
+    },
+    // 返回数量
+    totalCount () {
+      let count = 0;
+      return this.selectFood.length;
+    },
+    // 起送价 - 如果为 0 则显示还差多少起送
+    payDesc () {
+      if (this.totalPrice === 0) {
+        return `￥${this.minPrice}元`;
+      } else if (this.totalPrice < this.minPrice) {
+        let diff = this.minPrice - this.totalPrice;
+        return `还差￥${diff}元起送`;
+      } else {
+        return '去结算';
+      }
+    },
+    payClass () {
+      if (this.totolPrice < this.minPrice) {
+        return 'not-enough';
+      } else {
+        return 'enough';
+      }
+    }
+  },
   mounted() {},
   methods: {}
 };
@@ -70,7 +129,7 @@ export default {
           margin-top 12px
           display: inline-block
           padding 0 12px
-          width 24px
+          width auto
           height 24px
           line-height 24px
           font-size 16px
@@ -87,4 +146,19 @@ export default {
       .right
         flex 0 0 105px
         width 105px
+        // line-height 48px
+        .pay
+          height 48px
+          line-height 48px
+          font-size 12px
+          color rgba(255, 255, 255, .4)
+          font-weight 700
+          text-align center
+          &.not-enough
+            background #2b333b
+            color #eee
+          &.enough
+            background: #00b43c
+            color: #fff
+
 </style>
