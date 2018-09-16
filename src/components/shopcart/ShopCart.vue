@@ -64,17 +64,17 @@ export default {
     },
     // 起送价 - 如果为 0 则显示还差多少起送
     payDesc () {
-      if (this.totalPrice === 0) {
-        return `￥${this.minPrice}元`;
-      } else if (this.totalPrice < this.minPrice) {
-        let diff = this.minPrice - this.totalPrice;
-        return `还差￥${diff}元起送`;
-      } else {
-        return '去结算';
-      }
+        if (this.totalPrice === 0) {
+          return `￥${this.minPrice}元起送`;
+        } else if (this.totalPrice < this.minPrice) {
+          let diff = this.minPrice - this.totalPrice;
+          return `还差￥${diff}元起送`;
+        } else {
+          return '去结算';
+        } 
     },
     payClass () {
-      if (this.totolPrice < this.minPrice) {
+      if (this.totalPrice < this.minPrice) {
         return 'not-enough';
       } else {
         return 'enough';
@@ -155,8 +155,7 @@ export default {
           font-weight 700
           text-align center
           &.not-enough
-            background #2b333b
-            color #eee
+            background #333
           &.enough
             background: #00b43c
             color: #fff
