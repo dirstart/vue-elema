@@ -42,13 +42,20 @@
                   <span class="now">￥{{food.price}}</span>
                   <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
+                <div class="shop-button-wrap">
+                  <shop-button :food="food"></shop-button>
+                </div>
               </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
-    <shop-cart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shop-cart>
+    <shop-cart
+      :selectFoods="selectFoods"
+      :delivery-price="seller.deliveryPrice"
+      :min-price="seller.minPrice">
+    </shop-cart>
   </div>
 </template>
 
@@ -61,6 +68,7 @@
 <script>
 import BScroll from 'better-scroll';
 import ShopCart from '@/components/shopcart/ShopCart.vue';
+import ShopButton from '@/components/common/ShopButton.vue';
 
 export default {
   async created () {
@@ -109,7 +117,8 @@ export default {
     }
   },
   components: {
-    ShopCart
+    ShopCart,
+    ShopButton
   },
   methods: {
     _initScroll () {
@@ -149,6 +158,12 @@ export default {
       let scrollEl = this.$refs.menuList[index];
       this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
       // this.sidebarScroll.scrollToElement(scrollEl, 0);
+    },
+    // 选择食品
+    selectFoods (num) {
+      console.log('num', num);
+      let foods = [];
+      
     }
   }
 };
@@ -261,5 +276,9 @@ export default {
                 font-size 10px
                 text-decoration line-through
                 color: rgb(147, 153, 159)
+            .shop-button-wrap
+              position absolute
+              right 0
+              bottom 10px
 
 </style>

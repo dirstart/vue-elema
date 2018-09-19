@@ -3,12 +3,15 @@
     <div class="content">
       <div class="left">
         <div class="icon-wrap">
-          <i class="icon">
+          <i class="icon" :class="{highlight: totalCount > 0}">
             <!-- 下面这个也要加个 class -->
-            <i class="icon-shopping_cart"></i>
+            <i class="icon-shopping_cart" :class="{highlight: totalCount > 0}"></i>
           </i>
+          <span class="num" v-show="totalCount > 0">
+            {{totalCount}}
+          </span>
         </div>
-        <div class="price">￥{{totalPrice}}</div>
+        <div class="price" :class="{highlight: totalCount > 0}">￥{{totalPrice}}</div>
         <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
       </div>
       <div class="right">
@@ -59,19 +62,19 @@ export default {
     },
     // 返回数量
     totalCount () {
-      let count = 0;
-      return this.selectFood.length;
+      let count = this.selectFood && this.selectFood.length || 0;
+      return count;
     },
     // 起送价 - 如果为 0 则显示还差多少起送
     payDesc () {
-        if (this.totalPrice === 0) {
-          return `￥${this.minPrice}元起送`;
-        } else if (this.totalPrice < this.minPrice) {
-          let diff = this.minPrice - this.totalPrice;
-          return `还差￥${diff}元起送`;
-        } else {
-          return '去结算';
-        } 
+      if (this.totalPrice === 0) {
+        return `￥${this.minPrice}元起送`;
+      } else if (this.totalPrice < this.minPrice) {
+        let diff = this.minPrice - this.totalPrice;
+        return `还差￥${diff}元起送`;
+      } else {
+        return '去结算';
+      } 
     },
     payClass () {
       if (this.totalPrice < this.minPrice) {
@@ -79,7 +82,7 @@ export default {
       } else {
         return 'enough';
       }
-    }
+    },
   },
   mounted() {},
   methods: {}
@@ -119,12 +122,31 @@ export default {
             width 100%
             height 100%
             border-radius 50%
-            background #2b343c
+            background: #2b343c
             font-size 12px
             text-align center
+            &.highlight
+              background rgb(0, 160, 220)
             .icon-shopping_cart
               line-height 44px
               font-size 24px
+              color: #80858a
+              &.highlight
+                color #fff
+          .num
+            position absolute
+            top 0
+            left 30px
+            width 24px
+            height 16px
+            line-height 16px
+            border-radius 16px
+            background rgb(240, 20, 20)
+            box-shadow 0 4px 8px 0 rgba(0, 0, 0, .4)
+            font-size 12px
+            font-weight 700
+            text-align center
+            color #fff
         .price
           margin-top 12px
           display: inline-block
@@ -132,10 +154,13 @@ export default {
           width auto
           height 24px
           line-height 24px
+          color #666
           font-size 16px
           font-weight 700
           vertical-align top
           border-right 1px solid rgba(255, 255, 255, 0.1)
+          &.highlight
+            color #fff
         .desc
           display: inline-block
           padding 0 12px
@@ -146,7 +171,6 @@ export default {
       .right
         flex 0 0 105px
         width 105px
-        // line-height 48px
         .pay
           height 48px
           line-height 48px
