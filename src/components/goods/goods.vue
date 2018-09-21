@@ -114,6 +114,18 @@ export default {
         }
       }
       return 0;
+    },
+    // 选择食品
+    selectFoods () {
+      let result = [];
+      this.goods.forEach(good => {
+        good.foods.forEach(food => {
+          if (food.count) {
+            result.push(food);
+          }
+        })
+      });
+      return result;
     }
   },
   components: {
@@ -159,12 +171,6 @@ export default {
       this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
       // this.sidebarScroll.scrollToElement(scrollEl, 0);
     },
-    // 选择食品
-    selectFoods (num) {
-      console.log('num', num);
-      let foods = [];
-      
-    }
   }
 };
 </script>

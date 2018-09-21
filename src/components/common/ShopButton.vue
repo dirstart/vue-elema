@@ -1,10 +1,12 @@
 <template>
   <div class="wrap">
-    <div
-      class="food-decrease icon-remove_circle_outline"
-      v-show="food.count > 0"
-      @click="foodDecrease"
-    ></div>
+    <transition name="slide">
+      <div
+        class="food-decrease icon-remove_circle_outline"
+        v-show="food.count > 0"
+        @click="foodDecrease"
+      ></div>
+    </transition>
     <div class="food-num" v-show="food.count>0">
       {{food.count}}
     </div>
@@ -59,6 +61,13 @@ export default {
     line-height 24px
     padding 6px
     color #0898ee
+    &.slide-enter-active,
+    &.slide-leave-active
+      transition all 0.4s linear
+    &.slide-enter,
+    &.slide-leave-active
+      opacity 0
+      transform translate3d(24px, 0, 0) rotate(180deg)
   .food-num
     display: inline-block
     vertical-align: top

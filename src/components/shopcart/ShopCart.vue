@@ -27,15 +27,10 @@
 export default {
   props: {
     // 思考过程，该组件的商品价值是由 父元素 goods 的选择来决定的，所以需要一个对象来保存选择的价格们
-    selectFood: {
+    selectFoods: {
       type: Array,
       default () {
-        return [
-          {
-            price: 1,
-            count: 3
-          }
-        ];
+        return [];
       }
     },
     deliveryPrice: {
@@ -55,14 +50,14 @@ export default {
     // 返回总价
     totalPrice () {
       let total = 0;
-      this.selectFood.forEach(food => {
+      this.selectFoods.forEach(food => {
         total += food.price * food.count;
       });
       return total;
     },
     // 返回数量
     totalCount () {
-      let count = this.selectFood && this.selectFood.length || 0;
+      let count = this.selectFoods && this.selectFoods.length || 0;
       return count;
     },
     // 起送价 - 如果为 0 则显示还差多少起送
