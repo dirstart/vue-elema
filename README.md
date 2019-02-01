@@ -208,6 +208,9 @@ bottom: 37px;
 受 ES5 的限制，Vue.js 不能检测到对象属性的添加或删除。因为 Vue.js 在初始化实例时将属性转为 getter/setter，所以属性必须在 data 对象上才能让 Vue.js 转换它，才能让它是响应的。
 解决方案是使用： Vue.set(this.obj, 'attrName', 1);
 
+#### 18.vue-cli中使用的webpack-dev-server里面有漏洞。
+> 执行 npm audit fix 之后，再将 webpack-dev-server 降级为 @3.0.0
+
 
 #### 可优化
 
