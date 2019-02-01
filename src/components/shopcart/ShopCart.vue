@@ -57,7 +57,8 @@ export default {
     },
     // 返回数量
     totalCount () {
-      let count = this.selectFoods && this.selectFoods.length || 0;
+      console.log(this.selectFoods);
+      let count = this.selectFoods.length;
       return count;
     },
     // 起送价 - 如果为 0 则显示还差多少起送
