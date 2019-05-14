@@ -81,7 +81,7 @@ export default {
       return;
     }
     me.goods = data.data;
-    console.log("seller", this.seller);
+    console.log('seller', this.seller);
     me.$nextTick(() => {
       me._initScroll();
       me._calculateHeight();
@@ -123,7 +123,7 @@ export default {
           if (food.count) {
             result.push(food);
           }
-        })
+        });
       });
       return result;
     }
@@ -160,6 +160,8 @@ export default {
     },
     // 通过选择左侧分类按钮 => 滚动右侧菜单
     _selectCat (index, event) {
+      // 该属性为 better-scroll 里属性，原生event对象没有该属性，通过该判断过滤掉原生操作
+      // 不阻止的后果就是会被 +2 次
       if (!event._constructed) {
         return;
       }
@@ -170,7 +172,7 @@ export default {
       let scrollEl = this.$refs.menuList[index];
       this.sidebarScroll.scrollToElement(scrollEl, 300, 0, -100);
       // this.sidebarScroll.scrollToElement(scrollEl, 0);
-    },
+    }
   }
 };
 </script>

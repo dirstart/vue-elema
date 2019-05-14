@@ -36,6 +36,7 @@ export default {
       if (!event._constructed) {
         return;
       }
+      // 这里的 food 是假数据，而假数据中没有 count 属性，这里使我们强行加入的
       if (!this.food.count) {
         Vue.set(this.food, 'count', 1);
         this.food.count = 1;
@@ -54,7 +55,7 @@ export default {
 </script>
 <style lang='stylus' ref='stylesheet/stylus'>
   .wrap
-    font-size 0  
+    font-size 0
   .food-decrease
     display inline-block
     font-size 24px
@@ -83,5 +84,4 @@ export default {
     line-height 24px
     padding 6px
     color rgb(0, 160, 220)
-  
 </style>

@@ -25,6 +25,11 @@
 
 <script>
 export default {
+  /**
+   * @param {array} selectFoods 所选的所有商品的数组
+   * @param {number} deliveryPrice 配送费
+   * @param {number} minPricfe 起送价
+   */
   props: {
     // 思考过程，该组件的商品价值是由 父元素 goods 的选择来决定的，所以需要一个对象来保存选择的价格们
     selectFoods: {
@@ -65,12 +70,9 @@ export default {
     payDesc () {
       if (this.totalPrice === 0) {
         return `￥${this.minPrice}元起送`;
-      } else if (this.totalPrice < this.minPrice) {
-        let diff = this.minPrice - this.totalPrice;
-        return `还差￥${diff}元起送`;
-      } else {
-        return '去结算';
-      } 
+      }
+      let diff = this.minPrice - this.totalPrice;
+      return diff > 0 ? `还差${diff}元起送` : '去结算';
     },
     payClass () {
       if (this.totalPrice < this.minPrice) {
@@ -78,7 +80,7 @@ export default {
       } else {
         return 'enough';
       }
-    },
+    }
   },
   mounted() {},
   methods: {}

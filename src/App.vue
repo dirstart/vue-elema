@@ -24,8 +24,7 @@ export default {
   // 定义成函数的原因其实是 闭包！ 如果定义成对象复用就容易产生冲突而且不安全
   data () {
     return {
-      seller: {},
-      test: `img/xxx.jpg`
+      seller: {}
     };
   },
   async created () {
@@ -33,7 +32,6 @@ export default {
     const res = await me.axios.get('/api/seller');
     // 这里可以加上 if res.data.errno === 0
     me.seller = res.data.data || {};
-    console.log(me.seller);
   }
 };
 </script>
