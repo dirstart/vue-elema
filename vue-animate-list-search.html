@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <input type="text" v-model="query" />
+    <transition-group
+      name="staggered-fade"
+      tag="ul"
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="onEnter"
+      @leave="onLeave"
+    >
+      <li v-for="(item, index) in computedList"
+        :key="index"
+        :data-index="index"
+      >
+        {{
+          item.msg
+        }}
+      </li>
+    </transition-group>
+  </div>
+</body>
+<script>
+  var app = new Vue({
+    el: '#root',
+    data: {
+      query: '',
+      listData: [{
+        msg: '影魔'
+      }, {
+        msg: '血魔'
+      }, {
+        msg: '蓝猫'
+      }]
+    },
+    computed: {
+      computedList () {
+        return this.listData.filter(item => item.msg.indexOf(this.query) !== -1);
+      }
+    },
+    // 以下均只作用于缓冲动画效果
+    methods: {
+      beforeEnter (el) {
+        el.style.opacity = 0;
+        el.style.height = 0;
+      },
+      onEnter (el, done) {
+        var delay = el.dataset.index * 150
+        setTimeout(function () {
+          Velocity(
+            el,
+            { opacity: 1, height: '1.6em' },
+            { complete: done }
+          )
+        }, delay)
+      },
+      onLeave (el, done) {
+        // 这里是读取 data-index
+        var delay = el.dataset.index * 150
+        console.log(el);
+        setTimeout(function () {
+          Velocity(
+            el,
+            { opacity: 0, height: 0 },
+            { complete: done }
+          )
+        }, delay)
+      }
+    }
+  })
+</script>
+</html>

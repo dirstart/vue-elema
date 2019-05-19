@@ -1,5 +1,6 @@
 <template>
   <div class="wrap">
+    <!-- 增加按钮增加 vue 动画 -->
     <transition name="slide">
       <div
         class="food-decrease icon-remove_circle_outline"
