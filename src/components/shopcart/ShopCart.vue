@@ -20,6 +20,22 @@
         </div>
       </div>
     </div>
+    <!-- 小球动画 -->
+    <div class="ball-content">
+      <!-- transition 是一个动画描述，监听 show:false/true 的转换 -->
+      <div v-for="(ball, index) in balls" :key = "index">
+        <transition name="drop"
+          @before-enter="beforeDrop"
+          @enter="onDrop"
+          @after-enter="afterDrop"
+        >
+          <!-- 之所以采用双层的缘故是，外层是纵轴的transition，里层是横轴的 -->
+          <div class="ball" v-show="ball.show">
+            <div class="inner inner-hook"></div>
+          </div>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,8 +63,18 @@ export default {
       default: 0
     }
   },
+  created () {
+    const arr = new Array(1);
+    arr.fill({show: false});
+    this.balls = arr;
+  },
   data () {
-    return {};
+    return {
+      // 小球数组 - 小球的位置{x, y}，小球的显示和隐藏 true/false
+      balls: [],
+      dropBalls: [],
+      fold: true
+    };
   },
   components: {},
   computed: {
@@ -62,8 +88,10 @@ export default {
     },
     // 返回数量
     totalCount () {
-      console.log(this.selectFoods);
-      let count = this.selectFoods.length;
+      let count = 0;
+      this.selectFoods.forEach(food => {
+        count += food.count;
+      });
       return count;
     },
     // 起送价 - 如果为 0 则显示还差多少起送
@@ -83,7 +111,72 @@ export default {
     }
   },
   mounted() {},
-  methods: {}
+  methods: {
+    drop (el) {
+      // 遍历所有的小球，触发缓动函数
+      for (let i = 0; i < this.balls.length; i++) {
+        let ball = this.balls[i];
+        if (!ball.show) {
+          // 触发缓动函数 transition
+          ball.show = true;
+          ball.el = el;
+          this.dropBalls.push(ball);
+          return;
+        }
+      }
+    },
+    // 设置小球一开始的初始位置，将小球由 css 设置的终末位置拉上来
+    beforeDrop (el) {
+      let count = this.balls.length;
+      while (count--) {
+        let ball = this.balls[count];
+        if (ball.show) {
+          let rect = ball.el.getBoundingClientRect();
+          let x = rect.left - 32;
+          let y = -(window.innerHeight - rect.top - 22);
+          el.style.display = 'block';
+          // 移动纵轴
+          el.style.webkitTransform = `translate3d(0,${y}px,0)`;
+          el.style.transform = `translate3d(0,${y}px,0)`;
+          let inner = el.getElementsByClassName('inner-hook')[0];
+          // 移动横轴
+          inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
+          inner.style.transform = `translate3d(${x}px,0,0)`;
+        }
+      }
+    },
+    // 设置小球的终末位置
+    onDrop (el, done) {
+      // !!! 此句话是主动触发浏览器重绘。获取 offset 可以触发浏览器重绘，触发 dom 更新
+      // 重绘才可以让小球先移动到 + 号这里，然后作动画
+      // 不重绘的话 beforeDrop 作的东西都没有意义了
+      let rf = el.offsetHeight;
+      // 在 dom 更新后立即执行，有点 await 的效果
+      this.$nextTick(() => {
+        console.log('nextTick');
+        // 纵轴
+        el.style.webkitTransform = 'translate3d(0,0,0)';
+        el.style.transform = 'translate3d(0,0,0)';
+        let inner = el.getElementsByClassName('inner-hook')[0];
+        // 横轴
+        inner.style.webkitTransform = 'translate3d(0,0,0)';
+        inner.style.transform = 'translate3d(0,0,0)';
+        // 以下为官网解释
+        // 在很多情况下，Vue 可以自动得出过渡效果的完成时机。
+        // 默认情况下，Vue 会等待其在过渡效果的根元素的第一个 transitionend 或 animationend 事件。
+        el.addEventListener('transitionend', done);
+      });
+    },
+    // 重复利用
+    afterDrop (el) {
+      let ball = this.dropBalls.shift();
+      // 为了无限循环的使用，还原 ball 的display状态为 none
+      if (ball) {
+        ball.show = false;
+        el.style.display = 'none';
+      }
+    }
+  }
 };
 </script>
 <style lang='stylus' ref='stylesheet/stylus' scoped>
@@ -181,5 +274,21 @@ export default {
           &.enough
             background: #00b43c
             color: #fff
-
+    // 总结：纵轴的贝塞尔 + 横轴的 linear 实现了效果
+    .ball-content
+      .ball
+        position fixed
+        left 32px
+        bottom 32px
+        z-index 200
+        // 所有动作效果在 0.4s 内，通过贝塞尔曲线的频率规则 来实现
+        // 纵轴的缓动，贝塞尔移动 - 试下linear效果也还行
+        transition all .4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
+        .inner
+          width 16px
+          height 16px
+          border-radius 50%
+          background rgb(0, 160, 220)
+          // 横轴的缓动，线性移动
+          transition all 0.4s linear
 </style>

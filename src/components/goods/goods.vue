@@ -43,7 +43,7 @@
                   <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="shop-button-wrap">
-                  <shop-button :food="food"></shop-button>
+                  <shop-button :food="food" @food-add="foodAdd"></shop-button>
                 </div>
               </div>
             </li>
@@ -52,6 +52,7 @@
       </ul>
     </div>
     <shop-cart
+      ref="shopcart"
       :selectFoods="selectFoods"
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice">
@@ -81,7 +82,6 @@ export default {
       return;
     }
     me.goods = data.data;
-    console.log('seller', this.seller);
     me.$nextTick(() => {
       me._initScroll();
       me._calculateHeight();
@@ -133,6 +133,16 @@ export default {
     ShopButton
   },
   methods: {
+    foodAdd (target) {
+      this._drop(target);
+    },
+    // 父级传上来再分发给子组件的事件
+    _drop (target) {
+      // 体验优化,异步执行下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(target);
+      });
+    },
     _initScroll () {
       this.sidebarScroll = new BScroll(this.$refs.sidebarEl, {
         click: true

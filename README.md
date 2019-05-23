@@ -211,6 +211,9 @@ bottom: 37px;
 #### 18.vue-cli中使用的webpack-dev-server里面有漏洞。
 > 执行 npm audit fix 之后，再将 webpack-dev-server 降级为 @3.0.0
 
+#### 19.关于触发浏览器重绘的知识
+> https://blog.csdn.net/i13738612458/article/details/80373702
+
 
 #### 可优化
 

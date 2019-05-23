@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <span>{{message}}</span>
+    <a @click.prevent="reverseText" href="http://www.baidu.com">逆转裁判</a>
+    <a v-on:click="reverseText" href="http://www.baidu.com">逆转裁判</a>  
+    <input type="text" v-model="message">
+    <ol>
+      <todo-item v-for="item in arrayList" :todo="item" :key="item.id"></todo-item>
+      <todo-item v-for="x in otherList" :todo="x" key="333"></todo-item>
+    </ol>
+  </div>
+</body>
+<script>
+  Vue.component('todo-item', {
+    props: ['todo'],
+    template: '<li>{{todo.text}}</li>'
+  })
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello World',
+      arrayList: [{
+        id: 1,
+        text: '影魔'
+      }, {
+        id: 2,
+        text: '蓝猫'  
+      }],
+      otherList: [{
+        id: 3,
+        text: 'test'
+      }]
+    },
+    methods: {
+      reverseText () {
+        console.log(this.message);
+        this.message = this.message.split('').reverse().join('');
+      }
+    }
+  })
+</script>
+</html>

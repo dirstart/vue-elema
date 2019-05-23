@@ -44,12 +44,14 @@ export default {
       } else {
         this.food.count++;
       }
+      // 这里将事件派发给小球动画
+      this.$emit('food-add', event.target);
     },
     foodDecrease (event) {
       if (!event._constructed) {
         return;
       }
-      this.food.count--;
+      this.food.count >= 1 && this.food.count--;
     }
   }
 };
@@ -63,11 +65,13 @@ export default {
     line-height 24px
     padding 6px
     color #0898ee
+    // 过渡的过程设定
     &.slide-enter-active,
     &.slide-leave-active
       transition all 0.4s linear
+    // 过渡进入开始时、过渡离开结束时
     &.slide-enter,
-    &.slide-leave-active
+    &.slide-leave-to
       opacity 0
       transform translate3d(24px, 0, 0) rotate(180deg)
   .food-num
