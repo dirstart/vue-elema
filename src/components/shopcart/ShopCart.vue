@@ -1,45 +1,75 @@
 <template>
-  <div class="wrap">
-    <div class="content">
-      <div class="left">
-        <div class="icon-wrap">
-          <i class="icon" :class="{highlight: totalCount > 0}">
-            <!-- 下面这个也要加个 class -->
-            <i class="icon-shopping_cart" :class="{highlight: totalCount > 0}"></i>
-          </i>
-          <span class="num" v-show="totalCount > 0">
-            {{totalCount}}
-          </span>
-        </div>
-        <div class="price" :class="{highlight: totalCount > 0}">￥{{totalPrice}}</div>
-        <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
-      </div>
-      <div class="right">
-        <div class="pay" :class="payClass">
-          {{payDesc}}
-        </div>
-      </div>
-    </div>
-    <!-- 小球动画 -->
-    <div class="ball-content">
-      <!-- transition 是一个动画描述，监听 show:false/true 的转换 -->
-      <div v-for="(ball, index) in balls" :key = "index">
-        <transition name="drop"
-          @before-enter="beforeDrop"
-          @enter="onDrop"
-          @after-enter="afterDrop"
-        >
-          <!-- 之所以采用双层的缘故是，外层是纵轴的transition，里层是横轴的 -->
-          <div class="ball" v-show="ball.show">
-            <div class="inner inner-hook"></div>
+  <div>
+    <div class="shopcart-wrap">
+      <div class="content" @click="toggleList">
+        <div class="left">
+          <div class="icon-wrap">
+            <i class="icon" :class="{highlight: totalCount > 0}">
+              <!-- 下面这个也要加个 class -->
+              <i class="icon-shopping_cart" :class="{highlight: totalCount > 0}"></i>
+            </i>
+            <span class="num" v-show="totalCount > 0">
+              {{totalCount}}
+            </span>
           </div>
-        </transition>
+          <div class="price" :class="{highlight: totalCount > 0}">￥{{totalPrice}}</div>
+          <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
+        </div>
+        <div class="right" @click.stop.prevent="onPay">
+          <div class="pay" :class="payClass">
+            {{payDesc}}
+          </div>
+        </div>
       </div>
+      <!-- 小球动画 -->
+      <div class="ball-content">
+        <!-- transition 是一个动画描述，监听 show:false/true 的转换 -->
+        <div v-for="(ball, index) in balls" :key = "index">
+          <transition name="drop"
+            @before-enter="beforeDrop"
+            @enter="onDrop"
+            @after-enter="afterDrop"
+          >
+            <!-- 之所以采用双层的缘故是，外层是纵轴的transition，里层是横轴的 -->
+            <div class="ball" v-show="ball.show">
+              <div class="inner inner-hook"></div>
+            </div>
+          </transition>
+        </div>
+      </div>
+      <!-- 购物车详情 -->
+      <transition name="fold">
+        <div class="shopcart-list" v-show="listShow">
+          <div class="list-header">
+            <h1 class="title">购物车</h1>
+            <span class="empty" @click="emptyAll">清空</span>
+          </div>
+          <div class="list-content" ref="listContent">
+            <ul>
+              <li class="list-item" v-for="(item, index) in selectFoods" :key="index">
+                <span class="item-name">{{item.name}}</span>
+                <div class="item-price">
+                  <span>￥{{item.count * item.price}}元</span>
+                </div>
+                <div class="shop-button-wrap">
+                  <shop-button :food="item" @food-add="foodAdd"></shop-button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </transition>
     </div>
+    <!-- 购物车弹起的遮罩 -->
+    <transition name="fade">
+      <div class="list-mask" v-show="listShow" @click="hideMask"></div>      
+    </transition>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll';
+import ShopButton from '@/components/common/ShopButton.vue';
 export default {
   /**
    * @param {array} selectFoods 所选的所有商品的数组
@@ -76,7 +106,9 @@ export default {
       fold: true
     };
   },
-  components: {},
+  components: {
+    ShopButton
+  },
   computed: {
     // 返回总价
     totalPrice () {
@@ -108,10 +140,62 @@ export default {
       } else {
         return 'enough';
       }
+    },
+    listShow () {
+      if (this.totalCount <= 0) {
+        this.fold = true;
+        return false;
+      }
+      let isShow = !this.fold;
+      // 在这里触发 Bscroll，不然按钮没有办法点击
+      if (isShow) {
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            });
+          } else {
+            this.scroll.refresh();
+          }
+        });
+      }
+      return isShow;
     }
   },
   mounted() {},
   methods: {
+    /**
+     * 购物车列表
+     */
+    toggleList () {
+      if (this.totalCount <= 0) {
+        return;
+      }
+      this.fold = !this.fold;
+    },
+    foodAdd (target) {
+      this.drop(target);
+    },
+    // 清空购物表
+    emptyAll () {
+      this.selectFoods.forEach(food => {
+        food.count = 0;
+      });
+    },
+    // 取消遮罩
+    hideMask () {
+      this.fold = true;
+    },
+    // 结算
+    onPay () {
+      if (this.totalPrice < this.minPrice) {
+        return;
+      }
+      window.alert(`支付${this.totalPrice}元`);
+    },
+    /**
+     * 小球动画
+     */
     drop (el) {
       // 遍历所有的小球，触发缓动函数
       for (let i = 0; i < this.balls.length; i++) {
@@ -150,10 +234,10 @@ export default {
       // !!! 此句话是主动触发浏览器重绘。获取 offset 可以触发浏览器重绘，触发 dom 更新
       // 重绘才可以让小球先移动到 + 号这里，然后作动画
       // 不重绘的话 beforeDrop 作的东西都没有意义了
+      // eslint-disable-next-line
       let rf = el.offsetHeight;
       // 在 dom 更新后立即执行，有点 await 的效果
       this.$nextTick(() => {
-        console.log('nextTick');
         // 纵轴
         el.style.webkitTransform = 'translate3d(0,0,0)';
         el.style.transform = 'translate3d(0,0,0)';
@@ -180,12 +264,14 @@ export default {
 };
 </script>
 <style lang='stylus' ref='stylesheet/stylus' scoped>
-  .wrap
+  @import "../../common/stylus/mixin.styl"
+
+  .shopcart-wrap
     position fixed
     left 0
     bottom 0
     width 100%
-    z-index 50
+    z-index 51
     height 48px
     .content
       display flex
@@ -291,4 +377,77 @@ export default {
           background rgb(0, 160, 220)
           // 横轴的缓动，线性移动
           transition all 0.4s linear
+    // 所有的高度均有内部的元素撑开
+    .shopcart-list
+      position absolute
+      top 0
+      left 0
+      // 防止遮挡圆形区域
+      z-index -1
+      width 100%
+      // 动画的最终状态
+      transform translate3d(0, -100%, 0)
+      &.fold-enter-active
+      &.fold-leave-active
+        transition all .5s
+      // 动画的开始状态，和动画的离开状态
+      &.fold-enter
+      &.fold-leave-to
+        transform  translate3d(0, 0, 0)
+      .list-header
+        height 40px
+        line-height 40px
+        padding 0 18px
+        background #f3f5f7
+        border-bottom 1px solid rgba(7, 17, 27, .1)
+        .title
+          float left
+          font-size 14px
+          color rgb(7, 17, 27)
+        .empty
+          float right
+          font-size 12px
+          color rgb(0, 160, 220)
+      .list-content
+        padding 0 18px
+        max-height 217px
+        overflow hidden
+        background #fff
+        .list-item
+          position relative
+          padding 12px 0
+          box-sizing border-box
+          border-1px(rgba(7, 17, 27, .1))
+          .item-name
+            font-size 14px
+            line-height 24px
+            color rgb(7, 17, 27)
+          .item-price
+            position absolute
+            right 90px
+            bottom 12px
+            line-height 24px
+            font-size 14px
+            font-weight 700
+            color rgb(240, 20, 20)
+          .shop-button-wrap
+            position absolute
+            right 0
+            bottom 6px
+  .list-mask
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+    background rgba(7, 17, 27, .6);
+    // iPhone手机下的模糊效果
+    backdrop-filter: blur(10px)
+    z-index 50
+    &.fade-enter-active
+    &.fade-leave-active
+      transition all .4s
+    &.fade-enter
+    &.fade-leave-to
+      opacity 0
 </style>
