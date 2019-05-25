@@ -5,13 +5,13 @@
       <div
         class="food-decrease icon-remove_circle_outline"
         v-show="food.count > 0"
-        @click="foodDecrease"
+        @click.stop="foodDecrease"
       ></div>
     </transition>
     <div class="food-num" v-show="food.count>0">
       {{food.count}}
     </div>
-    <div class="food-add icon-add_circle" @click="foodAdd"></div>
+    <div class="food-add icon-add_circle" @click.stop="foodAdd"></div>
   </div>
 </template>
 

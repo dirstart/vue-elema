@@ -27,6 +27,7 @@
             <li v-for="(food, index) in item.foods"
               :key="index"
               class="food-item"
+              @click.stop.prevent="clickFood(food, $event)"
             >
               <div class="food-icon-wrap">
                 <img :src="food.icon || ''" alt="" class="food-icon">
@@ -36,7 +37,7 @@
                 <p class="desc">{{food.desc}}</p>
                 <div class="extra">
                   <span class="count">月售{{food.sellCount}}</span>
-                  <span>好评率{{food.rating}}%</span>
+                  <span>好评率{{food.rating || 100}}%</span>
                 </div>
                 <div class="price">
                   <span class="now">￥{{food.price}}</span>
@@ -57,6 +58,8 @@
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice">
     </shop-cart>
+    <!-- 商品详情页 -->
+    <food-detail ref="foodDetailEl" :food="clickedFood"></food-detail>
   </div>
 </template>
 
@@ -70,6 +73,7 @@
 import BScroll from 'better-scroll';
 import ShopCart from '@/components/common/ShopCart.vue';
 import ShopButton from '@/components/common/ShopButton.vue';
+import FoodDetail from '@/components/common/FoodDetail.vue';
 
 export default {
   async created () {
@@ -98,7 +102,9 @@ export default {
       // 为了实现 better-scroll联动的效果=>需要计算每个 cat-list 的高度
       catHeight: [],
       classMap: [],
-      scrollY: 0
+      scrollY: 0,
+      // 被点击的事物，用于传值给子组件显示
+      clickedFood: {}
     };
   },
   computed: {
@@ -130,9 +136,15 @@ export default {
   },
   components: {
     ShopCart,
-    ShopButton
+    ShopButton,
+    FoodDetail
   },
   methods: {
+    // 进入食品详情页
+    clickFood (food, event) {
+      this.clickedFood = food;
+      this.$refs.foodDetailEl.show();
+    },
     foodAdd (target) {
       this._drop(target);
     },
