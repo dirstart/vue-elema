@@ -62,7 +62,7 @@
     </div>
     <!-- 购物车弹起的遮罩 -->
     <transition name="fade">
-      <div class="list-mask" v-show="listShow" @click="hideMask"></div>      
+      <div class="list-mask" v-show="listShow" @click="hideMask"></div>
     </transition>
   </div>
 </template>
@@ -141,25 +141,30 @@ export default {
         return 'enough';
       }
     },
-    listShow () {
-      if (this.totalCount <= 0) {
-        this.fold = true;
-        return false;
+    listShow: {
+      get () {
+        if (this.totalCount <= 0) {
+          return false;
+        }
+        // 没有折叠才是展开
+        return !this.fold;
+      },
+      set () {
+        if (this.totalCount <= 0) {
+          this.fold = false;
+        }
+        if (!this.fold) {
+          this.$nextTick(() => {
+            if (!this.scroll) {
+              this.scroll = new BScroll(this.$refs.listContent, {
+                click: true
+              });
+            } else {
+              this.scroll.refresh();
+            }
+          });
+        }
       }
-      let isShow = !this.fold;
-      // 在这里触发 Bscroll，不然按钮没有办法点击
-      if (isShow) {
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = new BScroll(this.$refs.listContent, {
-              click: true
-            });
-          } else {
-            this.scroll.refresh();
-          }
-        });
-      }
-      return isShow;
     }
   },
   mounted() {},
@@ -181,6 +186,7 @@ export default {
       this.selectFoods.forEach(food => {
         food.count = 0;
       });
+      this.listShow = false;
     },
     // 取消遮罩
     hideMask () {

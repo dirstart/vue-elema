@@ -67,7 +67,7 @@
 
 <script>
 import MaskDivider from './MaskDivider';
-import star from '@/components/star/star.vue';
+import star from '@/components/common/star/star.vue';
 
 export default {
   props: {

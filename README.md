@@ -214,7 +214,6 @@ bottom: 37px;
 #### 19.关于触发浏览器重绘的知识
 > https://blog.csdn.net/i13738612458/article/details/80373702
 
-
 #### 可优化
 
 #### 1.代码的前后台交互中嵌套过多，可以优化  res.data.data => res.data 之类的。

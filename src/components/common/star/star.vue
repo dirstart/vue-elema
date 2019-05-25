@@ -61,7 +61,7 @@ export default {
 };
 </script>
 <style lang='stylus' ref='stylesheet/stylus'>
-  @import "../../common/stylus/mixin.styl"
+  @import "../../../common/stylus/mixin.styl"
   .star
     font-size 0
     .star-item

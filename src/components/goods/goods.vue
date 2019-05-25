@@ -68,7 +68,7 @@
  */
 <script>
 import BScroll from 'better-scroll';
-import ShopCart from '@/components/shopcart/ShopCart.vue';
+import ShopCart from '@/components/common/ShopCart.vue';
 import ShopButton from '@/components/common/ShopButton.vue';
 
 export default {
