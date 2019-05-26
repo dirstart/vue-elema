@@ -59,7 +59,7 @@
       :min-price="seller.minPrice">
     </shop-cart>
     <!-- 商品详情页 -->
-    <food-detail ref="foodDetailEl" :food="clickedFood"></food-detail>
+    <food-detail ref="foodDetailEl" :food="clickedFood" @father-add="foodAdd"></food-detail>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="food-wrap" v-show="showFlag">
+    <div class="food-wrap" v-show="showFlag" ref="food">
       <div class="food-detail-wrap">
         <div class="detail-picture">
           <img :src="food.image" alt="">
@@ -25,10 +25,23 @@
             <span class="now-price">￥{{food.price}}</span>
             <span class="old-price" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
             <div class="shop-button-wrap">
-              <shop-button :food="food"></shop-button>
+              <!-- food-add 这里是点击 + 之后，组件会自动触发的事件 -->
+              <shop-button :food="food" @food-add="foodAdd"></shop-button>
             </div>
+            <!-- 如果这个时候还没有将商品加入购物车 -->
+            <transition name="first-choose">
+              <div class="first-shop-button-wrap"
+                v-show="!food.count || food.count === 0"
+                @click.stop.prevent="foodAddFirst"
+              >加入购物车</div>
+            </transition>
           </div>
         </div>
+      </div>
+      <common-split v-show="food.info"></common-split>
+      <div class="food-info-wrap">
+        <h1 class="title">商品信息</h1>
+        <p class="text">{{food.info}}</p>
       </div>
       <common-split></common-split>
       <div class="food-rating-wrap">
@@ -42,6 +55,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import BScroll from 'better-scroll';
 import CommonSplit from '@/components/common/CommonSplit.vue';
 import ShopButton from '@/components/common/ShopButton.vue';
 export default {
@@ -68,11 +83,31 @@ export default {
     show () {
       this.showFlag = true;
       this.$nextTick(() => {
-        console.log('food', this.food);
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$refs.food, {
+            click: true
+          });
+        } else {
+          this.scroll.refresh();
+        }
       });
     },
     goBack () {
       this.showFlag = false;
+    },
+    foodAdd () {
+      // 这里要触发小球动画
+      this.$emit('father-add', event.target);
+    },
+    foodAddFirst (event) {
+      // 跳过 better-scroll
+      if (!event._constructed) {
+        return;
+      }
+      // 手动设置
+      Vue.set(this.food, 'count', 1);
+      // 此时还需要触发小球动画
+      this.$emit('father-add', event.target);
     }
   }
 };
@@ -158,6 +193,27 @@ export default {
           text-decoration line-through
         .shop-button-wrap
           position absolute
+          // 为了保持在同一水平线上
+          top -6px
+          right 10px
+        .first-shop-button-wrap
+          position absolute
           top 0
           right 10px
+          color #fff
+          background #00a0dc
+          font-size 10px
+          padding 0 12px
+          height 24px
+          line-height 24px
+          border-radius 12px
+          opacity 1
+          &.first-choose-enter
+          &.first-choose-leave-to
+            opacity 0
+          &.first-choose-enter-active
+          &.first-choose-leave-active
+            transition all .5s ease
+    .food-info-wrap
+      color #089e8a
 </style>
