@@ -1,54 +1,63 @@
 <template>
   <transition name="slide">
     <div class="food-wrap" v-show="showFlag" ref="food">
-      <div class="food-detail-wrap">
-        <div class="detail-picture">
-          <img :src="food.image" alt="">
-          <div class="back-icon" @click="goBack">
-            <!-- &lt;&lt;&nbsp;返回 -->
-            <i class="icon-arrow_lift"></i>
-          </div>
-        </div>
-        <div class="detail-text">
-          <h1 class="text-name">
-            {{food.name}}
-          </h1>
-          <div class="text-group">
-            <span class="group-sales">
-              月售{{food.sellCount}}份
-            </span>
-            <span class="group-feedback">
-              好评率{{food.rating || 100}}%
-            </span>
-          </div>
-          <div class="text-price">
-            <span class="now-price">￥{{food.price}}</span>
-            <span class="old-price" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
-            <div class="shop-button-wrap">
-              <!-- food-add 这里是点击 + 之后，组件会自动触发的事件 -->
-              <shop-button :food="food" @food-add="foodAdd"></shop-button>
+      <div class="food-content">
+        <div class="food-detail-wrap">
+          <div class="detail-picture">
+            <img :src="food.image" alt="">
+            <div class="back-icon" @click="goBack">
+              <!-- &lt;&lt;&nbsp;返回 -->
+              <i class="icon-arrow_lift"></i>
             </div>
-            <!-- 如果这个时候还没有将商品加入购物车 -->
-            <transition name="first-choose">
-              <div class="first-shop-button-wrap"
-                v-show="!food.count || food.count === 0"
-                @click.stop.prevent="foodAddFirst"
-              >加入购物车</div>
-            </transition>
+          </div>
+          <div class="detail-text">
+            <h1 class="text-name">
+              {{food.name}}
+            </h1>
+            <div class="text-group">
+              <span class="group-sales">
+                月售{{food.sellCount}}份
+              </span>
+              <span class="group-feedback">
+                好评率{{food.rating || 100}}%
+              </span>
+            </div>
+            <div class="text-price">
+              <span class="now-price">￥{{food.price}}</span>
+              <span class="old-price" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+              <div class="shop-button-wrap">
+                <!-- food-add 这里是点击 + 之后，组件会自动触发的事件 -->
+                <shop-button :food="food" @food-add="foodAdd"></shop-button>
+              </div>
+              <!-- 如果这个时候还没有将商品加入购物车 -->
+              <transition name="first-choose">
+                <div class="first-shop-button-wrap"
+                  v-show="!food.count || food.count === 0"
+                  @click.stop.prevent="foodAddFirst"
+                >加入购物车</div>
+              </transition>
+            </div>
           </div>
         </div>
-      </div>
-      <common-split v-show="food.info"></common-split>
-      <div class="food-info-wrap">
-        <h1 class="title">商品信息</h1>
-        <p class="text">{{food.info}}</p>
-      </div>
-      <common-split></common-split>
-      <div class="food-rating-wrap">
-        <h1 class="rating-text">商品评价</h1>
-        <ul class="rating-tag">
-        </ul>
-        <div class="only-something"></div>
+        <common-split v-show="food.info"></common-split>
+        <div class="food-info-wrap" v-show="food.info">
+          <h1 class="title">商品信息</h1>
+          <p class="text">{{food.info}}</p>
+        </div>
+        <common-split></common-split>
+        <div class="food-rating-wrap">
+          <h1 class="title">商品评价</h1>
+          <rating-select
+            :rating-select="selectType"
+            :only-content="onlyContent"
+            :desc="desc"
+            :ratings="food.ratings"
+            @change-only-content="changeOnlyContent"
+            @change-select-type="changeSelectType"
+          ></rating-select>
+          <!-- 评价列表 -->
+          <ul class="rating-list"></ul>
+        </div>
       </div>
     </div>
   </transition>
@@ -59,6 +68,8 @@ import Vue from 'vue';
 import BScroll from 'better-scroll';
 import CommonSplit from '@/components/common/CommonSplit.vue';
 import ShopButton from '@/components/common/ShopButton.vue';
+import RatingSelect from '@/components/common/RatingSelect.vue';
+const All = 2;
 export default {
   props: {
     food: {
@@ -70,27 +81,49 @@ export default {
   },
   data () {
     return {
-      showFlag: false
+      showFlag: false,
+      // 默认的子页面选择项
+      selectType: All,
+      onlyContent: true,
+      desc: {
+        all: '全部',
+        positive: '推荐',
+        negative: '吐槽'
+      }
     };
   },
   components: {
     CommonSplit,
-    ShopButton
+    ShopButton,
+    RatingSelect
   },
   computed: {},
   mounted() {},
   methods: {
     show () {
       this.showFlag = true;
+      // 置回默认选项
+      this.onlyContent = true;
+      this.selectType = All;
       this.$nextTick(() => {
-        if (!this.scroll) {
-          this.scroll = new BScroll(this.$refs.food, {
+        if (!this.foodDetailScroll) {
+          this.foodDetailScroll = new BScroll(this.$refs.food, {
             click: true
           });
         } else {
-          this.scroll.refresh();
+          this.foodDetailScroll.refresh();
         }
       });
+    },
+    changeOnlyContent () {
+      console.log('now', this.onlyContent);
+      this.onlyContent = !this.onlyContent;
+      this.$nextTick(() => {
+        this.foodDetailScroll.refresh();
+      });
+    },
+    changeSelectType (type) {
+      console.log('type', type);
     },
     goBack () {
       this.showFlag = false;
@@ -119,11 +152,11 @@ export default {
     position fixed
     top 0
     left 0
-    bottom 46px
+    bottom 48px
     width 100%
-    overflow hidden
     z-index 30
     background #fff
+    transform translate3d(0, 0, 0)
     &.slide-enter
     &.slide-leave-to
       transform translate3d(100%, 0, 0)
@@ -215,5 +248,26 @@ export default {
           &.first-choose-leave-active
             transition all .5s ease
     .food-info-wrap
-      color #089e8a
+      padding 10px 18px
+      .title
+        line-height 24px
+        height 24px
+        font-size 14px
+        color #07111b
+        font-weight 700
+      .text
+        padding 0 8px
+        font-size 12px
+        line-height 24px
+        text-indent 24px
+        color: #4d555d
+    .food-rating-wrap
+      padding 10px 0px
+      .title
+        margin-left 18px
+        height 24px
+        line-height 24px
+        font-size 14px
+        font-weight 700
+        color #07111b
 </style>
