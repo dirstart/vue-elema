@@ -56,7 +56,7 @@
             @change-select-type="changeSelectType"
           ></rating-select>
           <!-- 评价列表 -->
-          <ul class="rating-list"></ul>
+          <food-rating v-show="food.ratings && food.ratings.length" :rating-list="food.ratings"></food-rating>
         </div>
       </div>
     </div>
@@ -69,6 +69,7 @@ import BScroll from 'better-scroll';
 import CommonSplit from '@/components/common/CommonSplit.vue';
 import ShopButton from '@/components/common/ShopButton.vue';
 import RatingSelect from '@/components/common/RatingSelect.vue';
+import FoodRating from '@/components/common/FoodRating.vue';
 const All = 2;
 export default {
   props: {
@@ -95,7 +96,8 @@ export default {
   components: {
     CommonSplit,
     ShopButton,
-    RatingSelect
+    RatingSelect,
+    FoodRating
   },
   computed: {},
   mounted() {},
