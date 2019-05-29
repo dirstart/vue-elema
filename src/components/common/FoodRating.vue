@@ -32,6 +32,9 @@
 
 <script>
 import {formatDate} from '@/components/common/js/date.js';
+const POSITIVE = 0;
+const NEGATIVE = 1;
+const ALL = 2;
 export default {
   props: {
     ratingList: {
@@ -39,6 +42,14 @@ export default {
       default () {
         return [];
       }
+    },
+    onlyContent: {
+      type: Boolean,
+      default: true
+    },
+    selectType: {
+      type: Number,
+      default: ALL
     }
   },
   data () {
@@ -50,10 +61,11 @@ export default {
   mounted() {},
   methods: {
     judgeShow (item) {
-      if (!item.text) {
-        return false;
+      if (this.onlyContent) {
+        return !!item.text
+      } else {
+        return !!item;
       }
-      return true;
     }
   },
   filters: {

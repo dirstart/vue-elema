@@ -56,7 +56,12 @@
             @change-select-type="changeSelectType"
           ></rating-select>
           <!-- 评价列表 -->
-          <food-rating v-show="food.ratings && food.ratings.length" :rating-list="food.ratings"></food-rating>
+          <food-rating
+            v-show="food.ratings && food.ratings.length"
+            :rating-list="food.ratings"
+            :only-content="onlyContent"
+            :select-type="selectType"
+          ></food-rating>
         </div>
       </div>
     </div>
@@ -118,14 +123,16 @@ export default {
       });
     },
     changeOnlyContent () {
-      console.log('now', this.onlyContent);
       this.onlyContent = !this.onlyContent;
       this.$nextTick(() => {
         this.foodDetailScroll.refresh();
       });
     },
     changeSelectType (type) {
-      console.log('type', type);
+      this.selectType = type;
+      this.$nextTick(() => {
+        this.scroll.refresh();
+      })
     },
     goBack () {
       this.showFlag = false;
