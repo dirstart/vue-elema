@@ -40,7 +40,7 @@
               {{seller.name}}
             </h1>
             <div class="star-wrap">
-              <sf-star :size="48" :score="3"/>
+              <sf-star :size="48" :score="seller.score"/>
             </div>
             <sf-divider></sf-divider>
             <ul v-if="seller.supports" class="supports">
