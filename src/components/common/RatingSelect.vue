@@ -70,12 +70,12 @@ export default {
   computed: {
     positives () {
       return this.ratings.filter(item => {
-        return item.ratingType === POSITIVE;
+        return item.rateType === POSITIVE;
       });
     },
     negatives () {
       return this.ratings.filter(item => {
-        return item.ratingType === NEGATIVE;
+        return item.rateType === NEGATIVE;
       });
     }
   },

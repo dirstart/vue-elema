@@ -52,6 +52,7 @@
             :only-content="onlyContent"
             :desc="desc"
             :ratings="food.ratings"
+            :select-type="selectType"
             @change-only-content="changeOnlyContent"
             @change-select-type="changeSelectType"
           ></rating-select>
@@ -131,8 +132,8 @@ export default {
     changeSelectType (type) {
       this.selectType = type;
       this.$nextTick(() => {
-        this.scroll.refresh();
-      })
+        this.foodDetailScroll.refresh();
+      });
     },
     goBack () {
       this.showFlag = false;

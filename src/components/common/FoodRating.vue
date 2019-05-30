@@ -21,7 +21,6 @@
           <i class="icon-thumb_up" v-if="!item.rateType"></i>
           <i class="icon-thumb_down" v-else></i>
         </i>
-        
         <span class="content-text">
           {{item.text}}
         </span>
@@ -32,8 +31,8 @@
 
 <script>
 import {formatDate} from '@/components/common/js/date.js';
-const POSITIVE = 0;
-const NEGATIVE = 1;
+// const POSITIVE = 0;
+// const NEGATIVE = 1;
 const ALL = 2;
 export default {
   props: {
@@ -61,11 +60,16 @@ export default {
   mounted() {},
   methods: {
     judgeShow (item) {
-      if (this.onlyContent) {
-        return !!item.text
-      } else {
-        return !!item;
+      let flag = true;
+      // 只看有内容的评价
+      if (this.onlyContent && !item.text) {
+        flag = false;
       }
+      // 筛选掉 当前/推荐/吐槽
+      if (item.rateType !== this.selectType && this.selectType !== ALL) {
+        flag = false;
+      }
+      return flag;
     }
   },
   filters: {
