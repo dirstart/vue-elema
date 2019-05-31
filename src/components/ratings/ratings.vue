@@ -1,6 +1,6 @@
 <template>
-  <!-- 为了 better-scroll，顶层使用 absolute 撑开 -->
   <div class="main-rating-wrap" ref="mainRating">
+    <!-- 为了 better-scroll，顶层使用 absolute 撑开 -->
     <div class="rating-bscroll">
       <div class="overview">
         <div class="overview-left">
@@ -35,14 +35,19 @@
       </div>
       <common-split></common-split>
       <rating-select
-          :rating-select="selectType"
-          :only-content="onlyContent"
-          :desc="desc"
-          :ratings="ratings"
-          :select-type="selectType"
-          @change-only-content="changeOnlyContent"
-          @change-select-type="changeSelectType"
+        :rating-select="selectType"
+        :only-content="onlyContent"
+        :desc="desc"
+        :ratings="ratings"
+        :select-type="selectType"
+        @change-only-content="changeOnlyContent"
+        @change-select-type="changeSelectType"
       ></rating-select>
+      <main-rating
+        :rating-list="ratings"
+      >
+
+      </main-rating>
     </div>
   </div>
 </template>
@@ -52,6 +57,7 @@ import BScroll from 'better-scroll';
 import star from '@/components/common/star/star.vue';
 import CommonSplit from '@/components/common/CommonSplit.vue';
 import RatingSelect from '@/components/common/RatingSelect.vue';
+import MainRating from '@/components/common/MainRating.vue';
 const ALL = 2;
 export default {
   props: {
@@ -74,7 +80,8 @@ export default {
   components: {
     SfStar: star,
     CommonSplit,
-    RatingSelect
+    RatingSelect,
+    MainRating
   },
   async created () {
     const me = this;
@@ -106,13 +113,13 @@ export default {
 </script>
 <style lang="stylus" scoped>
   .main-rating-wrap
+    position absolute
+    top 174px
+    left 0
+    bottom 0
+    width 100%
+    overflow hidden
     .rating-bscroll
-      position absolute
-      top 174px
-      left 0
-      bottom 0
-      width 100%
-      overflow hidden
       .overview
         display flex
         padding 18px 0

@@ -109,15 +109,15 @@ export default {
       font-size 0
       .block
         display inline-block
+        font-size 12px
         padding 8px 12px
         margin-right 8px
         line-height 16px
         border-radius 1px
-        font-size 12px
         color rgb(77, 85, 93)
         .count
           margin-left 2px
-          font-size 8px
+          font-size 10px
         &.active
           color #fff
         &.positive
