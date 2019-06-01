@@ -178,7 +178,7 @@ export default {
         font-size 12px
         color rgb(240, 20, 20)
         line-height 24px
-      .activity-list  
+      .activity-list
         margin-top 16px
         .activity-item
           padding 16px 12px

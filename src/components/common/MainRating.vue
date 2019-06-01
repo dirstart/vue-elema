@@ -58,11 +58,6 @@ export default {
     stampToTime (val) {
       return formatDate(new Date(val), 'yyyy-MM-dd hh:mm');
     }
-  },
-  watch: {
-    ratingList (val) {
-      console.log('rateArray', val);
-    }
   }
 };
 </script>
