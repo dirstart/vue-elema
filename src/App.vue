@@ -8,14 +8,15 @@
       <router-link to="/ratings" tag="li" class="tab-item">评价</router-link>
       <router-link to="/seller" tag="li" class="tab-item">商家</router-link>
     </ul>
-    <router-view :seller=seller></router-view>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 import header from '@/components/header/header.vue';
 import 'common/stylus/icon.css';
-
 export default {
   name: 'app',
   components: {

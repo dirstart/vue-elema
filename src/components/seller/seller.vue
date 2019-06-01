@@ -65,6 +65,7 @@
 import BScroll from 'better-scroll';
 import star from '@/components/common/star/star.vue';
 import CommonSplit from '@/components/common/CommonSplit.vue';
+import {loadLocal, saveLocal} from '@/components/common/js/util.js';
 export default {
   props: {
     seller: {
@@ -79,6 +80,10 @@ export default {
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     this._initScroll();
+    this.haveCollect = loadLocal('haveCollect');
+    if (typeof this.haveCollect === 'undefined') {
+      saveLocal('haveCollect', false);
+    }
   },
   components: {
     SfStar: star,
@@ -100,6 +105,7 @@ export default {
     },
     toggleCollect () {
       this.haveCollect = !this.haveCollect;
+      saveLocal('haveCollect', this.haveCollect);
     }
   }
 };
@@ -136,7 +142,7 @@ export default {
             color rgb(77, 85, 93)
             line-height 18px
       .overview-right
-        flex 0 0 30px
+        flex 0 0 40px
         text-align center
         .icon-favorite
           font-size 24px
