@@ -44,9 +44,8 @@
         @change-select-type="changeSelectType"
       ></rating-select>
       <main-rating
-        :rating-list="ratings"
+        :rating-list="computedRatings"
       >
-
       </main-rating>
     </div>
   </div>
@@ -77,6 +76,21 @@ export default {
       ratings: []
     };
   },
+  computed: {
+    computedRatings () {
+      let res = this.ratings || [];
+      let type = this.selectType;
+      // 是否只看有内容的评价
+      if (this.onlyContent) {
+        res = res.filter(item => item.text);
+      }
+      // 如果没有选择全部
+      if (this.selectType !== ALL) {
+        res = res.filter(item => item.rateType === type);
+      }
+      return res;
+    }
+  },
   components: {
     SfStar: star,
     CommonSplit,
@@ -91,8 +105,6 @@ export default {
       return;
     }
     me.ratings = data.data;
-    console.log('rating', me.ratings);
-    console.log('seller', me.seller);
     this.$nextTick(() => {
       this.scroll = new BScroll(me.$refs.mainRating, {
         click: true
@@ -101,11 +113,9 @@ export default {
   },
   methods: {
     changeOnlyContent () {
-      console.log('change-only-content');
       this.onlyContent = !this.onlyContent;
     },
     changeSelectType (type) {
-      console.log('change-select-type');
       this.selectType = type;
     }
   }
@@ -129,6 +139,9 @@ export default {
           border-right 1px solid rgba(7, 17, 27, .1)
           padding 6px 0
           flex 0 0 137px
+          @media only screen and (max-width 320px)
+            flex 0 0 120px
+            width 120px
           .score
             font-size 24px
             line-height 28px
@@ -146,6 +159,8 @@ export default {
         .overview-right
           flex 1
           padding 6px 0 6px 24px
+          @media only screen and (max-width 320px)
+            padding-left 6px
           .block
             margin-bottom 8px
             &:last-child
