@@ -225,6 +225,11 @@ bottom: 37px;
     </div>
 ```
 
+#### 21.打包之后可能出现的问题
+`expected token u in JSON at position 0`
+
+> https://www.cnblogs.com/yangxunwu1992/p/8964780.html
+
 > food-wrap为 fixed 布局，可在内层加一层空层 food-content 即可解决
 
 #### 可优化

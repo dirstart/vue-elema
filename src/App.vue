@@ -8,6 +8,7 @@
       <router-link to="/ratings" tag="li" class="tab-item">评价</router-link>
       <router-link to="/seller" tag="li" class="tab-item">商家</router-link>
     </ul>
+    <!-- keep-alive 的原理，将组件的状态缓存到内存里，切换router的时候，router从内存中读取  -->
     <keep-alive>
       <router-view :seller="seller"></router-view>
     </keep-alive>

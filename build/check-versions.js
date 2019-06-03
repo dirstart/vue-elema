@@ -2,6 +2,7 @@
 const chalk = require('chalk')
 const semver = require('semver')
 const packageConfig = require('../package.json')
+// 通过下 shell 库能够执行一些命令
 const shell = require('shelljs')
 
 function exec (cmd) {

@@ -7,6 +7,7 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+// webpack插件 - 将编译过程中的 css 单独提取出来，变为一个文件，而不是打包到js中
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -32,6 +33,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    // 压缩代码用的
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
@@ -79,6 +81,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // enable scope hoisting
     new webpack.optimize.ModuleConcatenationPlugin(),
     // split vendor js into its own file
+    // webpack的主要功能之一，模块化分片。将三方库打包到一个 vendor.js 里面
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks (module) {
@@ -94,6 +97,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
+    // 这个 manifest 的作用：防止第三方库的 哈希值变化（意味着这部分要重新打包)。而有时候我们业务代码变化，但第三方库是不需要一起跟着变化的
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       minChunks: Infinity
@@ -119,6 +123,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
+// 是否开启 gzip，主要用于压缩，gzip更小
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
