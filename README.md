@@ -272,3 +272,15 @@ bottom: 37px;
 #### 3.关于for循环添加同样的一个对象到一个数组里面。
 > 是否有更快捷的办法。不使用 for 循环？
 
+已经会了。
+```
+var obj = {
+  a: 1,
+  b: 2,
+  name: 'ccc'
+};
+var testArray = new Array(8);
+testArray.fill(obj);
+console.log(testArray);
+```
+

@@ -1,5 +1,9 @@
-const express = require('express');
-const app = express();
+var obj = {
+  a: 1,
+  b: 2,
+  name: 'ccc'
+};
 
-app.use(express.static('./dist'));
-app.listen(3000);
+var testArray = new Array(8);
+testArray.fill(obj);
+console.log(testArray);
