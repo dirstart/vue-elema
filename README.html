@@ -390,8 +390,7 @@ blockquote {
 <li>安装 stylus-loader/stylus</li>
 <li>config/index 中的 host 可能要改为 '0.0.0.0'  =&gt; 为了能够在手机上看到网页。</li>
 <li>static 静态资源加载，需要在 index.html 中添加 link</li>
-<li>利用 vue-cli 搭建的后台需要在:  webpack.dev.conf.js 中的 devServer 中写
-不知道 express 从哪里被引用了，神奇。</li>
+<li>利用 vue-cli 搭建的后台需要在:  webpack.dev.conf.js 中的 devServer 中写</li>
 </ul>
 <pre class="hljs"><code><div>  devServer: {
     before(app) {
@@ -405,26 +404,21 @@ blockquote {
     clientLogLevel: 'warning',
   ...
 </div></code></pre>
-<ul>
-<li>同时为了我们的后台能够被看见，不能使用 vue-cli webpack 默认的 启动路径
-这个拿不到数据：<code>http://localhost:8080/#/api/seller</code>
-下面这个可以： <code>http://localhost:8080/api/seller</code></li>
-</ul>
-<h3 id="%E9%97%AE%E9%A2%98%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%81">问题未解决！</h3>
+<h3 id="%E9%97%AE%E9%A2%98%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%81%E5%B7%B2%E8%A7%A3%E5%86%B3">问题(<s>未解决！</s>)已解决</h3>
+<blockquote>
+<p>webpack 2.9 之后采用的是 基于 Express 开发的 <code>webpack-dev-server</code>，所以 API 模拟的地方改变了。</p>
+</blockquote>
+<hr>
+<h3 id="%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95">踩坑实录</h3>
 <h4 id="1%E5%B7%A6%E4%BE%A7%E5%88%86%E7%B1%BB%E6%A0%8F%E7%82%B9%E5%87%BB-%E8%A7%A6%E5%8F%91%E5%8F%B3%E8%BE%B9%E6%BB%9A%E5%8A%A8-%E8%A7%A6%E5%8F%91-currentindex-%E5%8F%98%E5%8C%96-%E5%88%B0%E7%AC%AC-45-%E7%9A%84%E6%97%B6%E5%80%99-currentindex-%E5%87%BA%E9%94%99%E3%80%82">1.左侧分类栏点击 =&gt; 触发右边滚动 =&gt; 触发 currentIndex 变化 =&gt; 到第 4/5 的时候 currentIndex 出错。</h4>
 <blockquote>
 <p>已解决，问题源于 better-scoll 1px 的计算偏差。 第五个tab的边界值为1757，而better-scroll计算为1756</p>
 </blockquote>
 <p>解决方案： 在 currentIndex 的判断处 <code>+1px</code>.(未找到计算偏差原因，经测试不是 border 问题)</p>
-<hr>
-<h3 id="%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95">踩坑实录</h3>
-<h4 id="1%E5%85%B3%E4%BA%8E-localhost8080-%E5%92%8C-localhost8080-%E7%9A%84%E5%8C%BA%E5%88%AB">1.关于 localhost:8080/#/ 和 localhost:8080 的区别</h4>
-<blockquote>
-<p>因为 vue-cli 默认的带 #，导致我在 webpack.dev.conf.js 中写的 路由无效了。</p>
-</blockquote>
-<p>https://segmentfault.com/q/1010000010340823
-https://www.imooc.com/qadetail/229672?lastmedia=1</p>
 <h4 id="2%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D%E7%9A%84%E6%96%B9%E6%B3%95">2.配置路径别名的方法</h4>
+<blockquote>
+<p>下面两玩意儿其实是一样的，人家特意把 resolve 重写了一遍而已，如今已经不需要纠结这些细节了。</p>
+</blockquote>
 <pre class="hljs"><code><div>'common': resolve('src/common')
 'common': path.resolve(__dirname, '../src/common')
 </div></code></pre>
@@ -522,6 +516,9 @@ import 'common/stylus/test.css';
 <p>如果较少切换，只在第一次运行的时候使用到，可以用 v-if.</p>
 </blockquote>
 <h4 id="11%E8%A7%A3%E5%86%B3css-loader%E5%AF%B9%E5%9B%BE%E7%89%87%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84-url%E6%96%B9%E5%BC%8F-%E5%BC%95%E7%94%A8%E7%9A%84%E5%8A%9E%E6%B3%95----%E4%BF%AE%E6%94%B9-vue-cli-%E4%B8%AD-webpack-%E7%9A%84%E9%85%8D%E7%BD%AE">11.解决<code>css-loader</code>对图片静态资源的绝对路径 url方式 引用的办法 -- 修改 vue-cli 中 webpack 的配置</h4>
+<blockquote>
+<p>此为 css-loader 的配置学习，看些其文档很快就能知道</p>
+</blockquote>
 <pre class="hljs"><code><div>const cssLoader = {
   loader: 'css-loader',
   options: {
@@ -548,6 +545,14 @@ import 'common/stylus/test.css';
 <li>后者应该用 线上的地址。 否则怎么搞都是错的！！！！！！！！！</li>
 </ul>
 <h4 id="13%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C%E5%AD%A6%E4%B9%A0">13.渐变效果学习</h4>
+<blockquote>
+<p>其实这是 Vue 官网的过渡，当时不怎么清除。其实很简单，主要用于 display 的变化。</p>
+</blockquote>
+<ul>
+<li>x-enter =&gt; x-enter-to (可以理解为 display 从 none开始 到 block[或其他] 的变化)</li>
+<li>x-leave =&gt; x-leave-to (可以理解为 display 从 block[或其他] 到 none 的变化)</li>
+<li>x-enter-active、x-leave-active 是其中间的函数定义。诸如变化时间可以写在里面.类比 css3 中的 transition</li>
+</ul>
 <pre class="hljs"><code><div>transition all 0.5s
 &amp;.fade-enter-active, &amp;.fade-leave-active
   transition: all 0.5s
@@ -556,7 +561,7 @@ import 'common/stylus/test.css';
   background: rgba(7, 17, 27, 0)
 </div></code></pre>
 <h4 id="14%E9%99%A4%E4%BA%86%E8%AE%BE%E7%BD%AE%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%E4%BB%A5%E5%A4%96%E5%A6%82%E4%BD%95%E8%AE%A9-overflow-hidensroll-%E7%94%9F%E6%95%88%EF%BC%9F">14.除了设置固定高度以外如何让 overflow: hiden/sroll 生效？</h4>
-<p>通过设置 绝对定位 和 top 和 right</p>
+<p>通过设置 绝对定位 和 top 和 right。这个真是学到了，还从没这么用过.</p>
 <pre class="hljs"><code><div>position: absolute;
 top: 174px;
 bottom: 37px;

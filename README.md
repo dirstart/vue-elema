@@ -4,7 +4,6 @@
 * config/index 中的 host 可能要改为 '0.0.0.0'  => 为了能够在手机上看到网页。
 * static 静态资源加载，需要在 index.html 中添加 link
 * 利用 vue-cli 搭建的后台需要在:  webpack.dev.conf.js 中的 devServer 中写
-不知道 express 从哪里被引用了，神奇。
 ```
   devServer: {
     before(app) {
@@ -18,28 +17,21 @@
     clientLogLevel: 'warning',
   ...
 ```
-* 同时为了我们的后台能够被看见，不能使用 vue-cli webpack 默认的 启动路径
-这个拿不到数据：`http://localhost:8080/#/api/seller`
-下面这个可以： `http://localhost:8080/api/seller`
+### 问题(~~未解决！~~)已解决
+> webpack 2.9 之后采用的是 基于 Express 开发的 `webpack-dev-server`，所以 API 模拟的地方改变了。
 
-### 问题未解决！
+* * *
+
+### 踩坑实录
 
 #### 1.左侧分类栏点击 => 触发右边滚动 => 触发 currentIndex 变化 => 到第 4/5 的时候 currentIndex 出错。
 > 已解决，问题源于 better-scoll 1px 的计算偏差。 第五个tab的边界值为1757，而better-scroll计算为1756
 
 解决方案： 在 currentIndex 的判断处 `+1px`.(未找到计算偏差原因，经测试不是 border 问题)
 
-* * *
-
-### 踩坑实录
-
-#### 1.关于 localhost:8080/#/ 和 localhost:8080 的区别
-> 因为 vue-cli 默认的带 #，导致我在 webpack.dev.conf.js 中写的 路由无效了。 
-
-https://segmentfault.com/q/1010000010340823
-https://www.imooc.com/qadetail/229672?lastmedia=1
-
 #### 2.配置路径别名的方法
+> 下面两玩意儿其实是一样的，人家特意把 resolve 重写了一遍而已，如今已经不需要纠结这些细节了。
+
 ```      
 'common': resolve('src/common')
 'common': path.resolve(__dirname, '../src/common')
@@ -143,6 +135,8 @@ import 'common/stylus/test.css';
 > 如果较少切换，只在第一次运行的时候使用到，可以用 v-if.
 
 #### 11.解决`css-loader`对图片静态资源的绝对路径 url方式 引用的办法 -- 修改 vue-cli 中 webpack 的配置
+> 此为 css-loader 的配置学习，看些其文档很快就能知道
+
 ```
 const cssLoader = {
   loader: 'css-loader',
@@ -171,6 +165,12 @@ const cssLoader = {
 * 后者应该用 线上的地址。 否则怎么搞都是错的！！！！！！！！！
 
 #### 13.渐变效果学习
+> 其实这是 Vue 官网的过渡，当时不怎么清除。其实很简单，主要用于 display 的变化。
+
+* x-enter => x-enter-to (可以理解为 display 从 none开始 到 block\[或其他\] 的变化)
+* x-leave => x-leave-to (可以理解为 display 从 block\[或其他\] 到 none 的变化)
+* x-enter-active、x-leave-active 是其中间的函数定义。诸如变化时间可以写在里面.类比 css3 中的 transition
+
 ```
 transition all 0.5s
 &.fade-enter-active, &.fade-leave-active
@@ -181,7 +181,7 @@ transition all 0.5s
 ```
 
 #### 14.除了设置固定高度以外如何让 overflow: hiden/sroll 生效？
-通过设置 绝对定位 和 top 和 right
+通过设置 绝对定位 和 top 和 right。这个真是学到了，还从没这么用过.
 ```
 position: absolute;
 top: 174px;
@@ -211,8 +211,12 @@ bottom: 37px;
 #### 18.vue-cli中使用的webpack-dev-server里面有漏洞。
 > 执行 npm audit fix 之后，再将 webpack-dev-server 降级为 @3.0.0
 
+这里唯一需要注意的一点是。webpack 和 webpack-dev-server 的版本要配套。
+
 #### 19.关于触发浏览器重绘的知识
 > https://blog.csdn.net/i13738612458/article/details/80373702
+
+获取某些属性也会引发重绘，这是我所不知道的。如 offsetTop/offsetLeft 等。
 
 #### 20.better-scroll 和 fixed 共存时失效的解决
 ```
