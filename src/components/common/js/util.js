@@ -1,6 +1,6 @@
 export const loadLocal = (name, def) => {
   let value = localStorage.getItem(name) || def;
-  value = JSON.parse(value);
+  value = (typeof value !== 'undefined') && JSON.parse(value);
   return value;
 };
 

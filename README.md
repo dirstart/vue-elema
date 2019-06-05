@@ -224,13 +224,38 @@ bottom: 37px;
       </div>
     </div>
 ```
+> food-wrap为 fixed 布局，可在内层加一层空层 food-content 即可解决
 
 #### 21.打包之后可能出现的问题
 `expected token u in JSON at position 0`
 
 > https://www.cnblogs.com/yangxunwu1992/p/8964780.html
+这个错误是由于 JSON.parse 解析了 undefined。确保所解析的东西不是 undefined 即可。
 
-> food-wrap为 fixed 布局，可在内层加一层空层 food-content 即可解决
+#### 22.关于 2x图 和 3x图。
+> https://www.jianshu.com/p/e61d1d98a4cb
+
+* 这是个挺有意思的历史原因。
+    - 2007年初代iPhone 3GS,320x480像素。一个点是一个像素。
+    - 2010年iPhone4发布，使用Retina显示屏，尺寸还是320*480，但像素为640x960。一个点是两个像素。
+    - 2014年iPhone6s Plus发布，尺寸是414736,像素为12422208。一个点是三个像素。
+* 文字啥的，是矢量元素，放大多少倍无关紧要，图片可就要紧了。小图片放大好几倍屏幕就会有马赛克啦。
+    - 如果把 2x 的图片放在 3x 的屏幕上，那无疑是会变模糊的，影响了用户体验
+    - 如果把 3x 的图片放在 2x 的屏幕上，那么会消耗内存，所以还是要一一对应滴。
+
+#### 23.path.resolve 和 path.join 的区别
+
+* path.join - 组装路径
+> path.join('test', 'dota2', 'jx3') => test\dota2\jx3
+
+* path.resolve - 解析为当前目录的绝对路径
+> path.resolve('test', 'dota2', 'jx3') => D:\vue-elema\test\dota2\jx3
+
+所以呢，理论上来说 `path.join(__dirname, xxx)` 和 `path.resolve(__dirname, 效果是一样的)`。
+主要还是因为 __dirname 指向被执行 JS 的绝对路径。用了它之后我们以为 join 和 resolve 是一样的啦。
+实际还是 __dirname 的功劳 ==，能说功劳吗？
+
+
 
 #### 可优化
 

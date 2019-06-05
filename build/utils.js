@@ -3,7 +3,9 @@ const path = require('path')
 const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const packageConfig = require('../package.json')
+const fs = require('fs');
 
+// 一些资源文件地址的定义 - 区分了 生产环境 和 开发环境
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -12,6 +14,8 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
+// 更优雅的 webpack loader 们的使用方式，内部支持了 stylus、less 等loader的配置，让使用更简单
+// 非常值得学习
 exports.cssLoaders = function (options) {
   options = options || {}
 
@@ -44,6 +48,10 @@ exports.cssLoaders = function (options) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
+      // loader = stylus/less/sass
+      // loaderOptions = 我们自己做的一些其他配置
+      // 这里的最底层都用了 css-loader，相当于我们自己不用重复写这些东西
+      // 
       loaders.push({
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
@@ -80,7 +88,8 @@ exports.cssLoaders = function (options) {
 exports.styleLoaders = function (options) {
   const output = []
   const loaders = exports.cssLoaders(options)
-
+  
+  //  style-loader 是每个 css-loader 都要读取的，学过 webpack 配置即可知道
   for (const extension in loaders) {
     const loader = loaders[extension]
     output.push({
@@ -88,6 +97,11 @@ exports.styleLoaders = function (options) {
       use: loader
     })
   }
+  // fs.writeFile(filename, data, [options], callback)
+  // {flag: 'a'} 是追加参数
+  fs.writeFile(path.resolve(__dirname, 'testOutput.txt'), JSON.stringify(output), {flag: 'a'}, (err) => {
+    console.log('写入出错', err);
+  });
 
   return output
 }

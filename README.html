@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h4 id="%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE">初始配置</h4>
+<ul>
+<li>安装 stylus-loader/stylus</li>
+<li>config/index 中的 host 可能要改为 '0.0.0.0'  =&gt; 为了能够在手机上看到网页。</li>
+<li>static 静态资源加载，需要在 index.html 中添加 link</li>
+<li>利用 vue-cli 搭建的后台需要在:  webpack.dev.conf.js 中的 devServer 中写
+不知道 express 从哪里被引用了，神奇。</li>
+</ul>
+<pre class="hljs"><code><div>  devServer: {
+    before(app) {
+      app.get('/api/seller', (req, res) =&gt; {
+        res.json({
+          errno: 0,
+          data: seller
+        });
+      });
+    },
+    clientLogLevel: 'warning',
+  ...
+</div></code></pre>
+<ul>
+<li>同时为了我们的后台能够被看见，不能使用 vue-cli webpack 默认的 启动路径
+这个拿不到数据：<code>http://localhost:8080/#/api/seller</code>
+下面这个可以： <code>http://localhost:8080/api/seller</code></li>
+</ul>
+<h3 id="%E9%97%AE%E9%A2%98%E6%9C%AA%E8%A7%A3%E5%86%B3%EF%BC%81">问题未解决！</h3>
+<h4 id="1%E5%B7%A6%E4%BE%A7%E5%88%86%E7%B1%BB%E6%A0%8F%E7%82%B9%E5%87%BB-%E8%A7%A6%E5%8F%91%E5%8F%B3%E8%BE%B9%E6%BB%9A%E5%8A%A8-%E8%A7%A6%E5%8F%91-currentindex-%E5%8F%98%E5%8C%96-%E5%88%B0%E7%AC%AC-45-%E7%9A%84%E6%97%B6%E5%80%99-currentindex-%E5%87%BA%E9%94%99%E3%80%82">1.左侧分类栏点击 =&gt; 触发右边滚动 =&gt; 触发 currentIndex 变化 =&gt; 到第 4/5 的时候 currentIndex 出错。</h4>
+<blockquote>
+<p>已解决，问题源于 better-scoll 1px 的计算偏差。 第五个tab的边界值为1757，而better-scroll计算为1756</p>
+</blockquote>
+<p>解决方案： 在 currentIndex 的判断处 <code>+1px</code>.(未找到计算偏差原因，经测试不是 border 问题)</p>
+<hr>
+<h3 id="%E8%B8%A9%E5%9D%91%E5%AE%9E%E5%BD%95">踩坑实录</h3>
+<h4 id="1%E5%85%B3%E4%BA%8E-localhost8080-%E5%92%8C-localhost8080-%E7%9A%84%E5%8C%BA%E5%88%AB">1.关于 localhost:8080/#/ 和 localhost:8080 的区别</h4>
+<blockquote>
+<p>因为 vue-cli 默认的带 #，导致我在 webpack.dev.conf.js 中写的 路由无效了。</p>
+</blockquote>
+<p>https://segmentfault.com/q/1010000010340823
+https://www.imooc.com/qadetail/229672?lastmedia=1</p>
+<h4 id="2%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D%E7%9A%84%E6%96%B9%E6%B3%95">2.配置路径别名的方法</h4>
+<pre class="hljs"><code><div>'common': resolve('src/common')
+'common': path.resolve(__dirname, '../src/common')
+</div></code></pre>
+<h4 id="3%E4%B8%A5%E9%87%8D%EF%BC%9A-stylus-%E6%97%A0%E6%B3%95%E5%BC%95%E5%85%A5-%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6">3.严重： stylus 无法引入 字体文件</h4>
+<p>原引用方式(失败的方式，修改原来的 css 为 styl 文件)：猜测可能是 webpack 中 stylus 需要相关配置？  --------------  <code>style</code> 下引用</p>
+<pre class="hljs"><code><div>&lt;style lang=&quot;stylus&quot; ref=&quot;stylesheet/stylus&quot;&gt;
+  @import &quot;common/stylus/index.styl&quot;
+  @import &quot;common/stylus/icon.styl&quot;
+</div></code></pre>
+<p>现引用方案：使用原来默认的 .css 文件  ------- <code>script</code> 下引用。</p>
+<pre class="hljs"><code><div>&lt;script&gt;
+import header from '@/components/header/header.vue';
+import 'common/stylus/test.css';
+</div></code></pre>
+<h2 id="%E7%9F%AD%E6%9C%9F%E5%86%85%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E8%AF%A5%E9%97%AE%E9%A2%98%EF%BC%9Ahttpssegmentfaultcomq1010000009500736">短期内无法解决该问题：https://segmentfault.com/q/1010000009500736</h2>
+<h2 id="%E7%95%99%E5%BE%85%E6%9C%89%E7%A9%BA%E8%A7%A3%E5%86%B3%E3%80%82%E6%9A%82%E6%97%B6%E9%87%87%E7%94%A8-css-%E6%96%B9%E6%A1%88%E3%80%82">留待有空解决。暂时采用 css 方案。</h2>
+<h4 id="4%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B0-1px-%E7%9A%84%E5%8A%9E%E6%B3%95">4.移动端实现 1px 的办法</h4>
+<p>通过 @media 查询参数来实现。通过 after 来实现 border，此后通过 查询，分别给 after 添加 transform 缩放来实现。我们可以通过添加背景来检验是否真的变化。(因为1px的变动很难用肉眼观测到)</p>
+<pre class="hljs"><code><div>@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)
+  .border-1px
+    &amp;::after
+      -webkit-transform: scaleY(0.7)
+      transform: scaleY(0.7)
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+  .border-1px
+    &amp;::after
+      -webkit-transform: scaleY(0.5)
+      transform: scaleY(0.5)
+      background-color: red
+</div></code></pre>
+<h4 id="5keepalive-%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%92%8C%E4%BD%BF%E7%94%A8">5.keepAlive 的学习和使用</h4>
+<blockquote>
+<p>今天学习了下这个 组件缓存 的功能。简单地来说，可以使用在 input 的信息保留上。</p>
+</blockquote>
+<ul>
+<li>普通组件的 信息保留。 ----   当 v-if 切换的时候，通过注释的地方可以保留信息。</li>
+</ul>
+<pre class="hljs"><code><div>  &lt;div&gt;
+    &lt;!-- &lt;keep-alive include=&quot;test-keep-alive&quot;&gt; --&gt;
+      &lt;test-keep-alive v-if=&quot;bool&quot;&gt;&lt;/test-keep-alive&gt;
+    &lt;!-- &lt;/keep-alive&gt; --&gt;
+    &lt;button @click=&quot;handleBool&quot;&gt;test&lt;/button&gt;
+  &lt;/div&gt;
+</div></code></pre>
+<ul>
+<li>更为酷炫的是： 路由里面的缓存保留。 -- 目测应该常用于 登录注册。 (很关键的功能)</li>
+</ul>
+<pre class="hljs"><code><div>{
+  path: '/goods',
+  name: 'goods',
+  component: Goods,
+  meta: {
+    keepAlive: true
+  }
+},
+------------------------
+&lt;keep-alive&gt;
+  &lt;router-view v-if=&quot;$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+&lt;/keep-alive&gt;
+&lt;router-view v-if=&quot;!$route.meta.keepAlive&quot;&gt;&lt;/router-view&gt;
+</div></code></pre>
+<p>这两个是 if 是为了 所有组件的呈现。如果没有第二个，说明你不想 无法缓存的组件出现了.</p>
+<h4 id="6%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9%E5%87%BA%E7%8E%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98">6.配置修改出现了一个问题</h4>
+<blockquote>
+<p>host: '0.0.0.0', // can be overwritten by process.env.HOST</p>
+</blockquote>
+<p>本意是希望能够也在手机端浏览。造成的麻烦是每次都默认打开了  0.0.0.0 页面报错，还需要手动置回  localhost 才能对，花费了一次时间。</p>
+<p>当前解决方案： 先配置回去 <code>host: process.env.HOST</code>
+此后若是需要手机调试，其实也可以：  npm run dev</p>
+<h4 id="7git-checkout---gay%E7%89%B9%E8%B8%B9%E5%85%8B%E5%A5%A5%E7%89%B9%E6%9D%A0%E5%88%87%E6%8D%A2%E5%88%B0%E4%B8%8A%E4%B8%80%E6%9D%A1%E5%88%86%E6%94%AF%EF%BC%81%EF%BC%81%EF%BC%81-%E5%A4%AA%E5%A5%BD%E7%94%A8%E4%BA%86%EF%BC%81-%E8%B7%9F-sublime-%E7%9A%84ctrl-tab-%E5%BC%82%E6%9B%B2%E5%90%8C%E5%B7%A5%E3%80%82%E8%AE%B0%E4%BD%8F%E4%BA%86%EF%BC%81%EF%BC%81%EF%BC%81">7.<code>git checkout -</code>  (gay特踹克奥特杠)切换到上一条分支！！！ 太好用了！ 跟 Sublime 的<code>Ctrl + Tab</code> 异曲同工。记住了！！！</h4>
+<h4 id="8%E5%85%B3%E4%BA%8Edisplay-block-%E5%92%8Cdisplay-inline-block%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%82">8.关于<code>display: block</code> 和<code>display: inline-block</code>的区别。</h4>
+<blockquote>
+<p>使用 <code>display: block</code> 会出现子层父层边距合并的问题。即是说，父层无<code>margin-top</code>，子层有，则父层也会有<code>margin-top</code>，采用 <code>display: inlne-block</code> 因为其 BFC 特性则 =&gt; 子层相对于父层产生边距，父层对外无边距。</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block和block1.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block和block2.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block和block3.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/dirstart/image_bed/167278625cc7f85935eca2d326411b4ed5fba172/inline-block和block4.png" alt=""></p>
+<h4 id="9chrome%E8%B0%83%E8%AF%95%EF%BC%8C%E8%8B%A5%E8%A6%81%E8%8E%B7%E5%8F%96%E6%8B%A5%E6%9C%89%E6%9F%90%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%90%8D%E7%9A%84%E5%85%83%E7%B4%A0%E3%80%82">9.Chrome调试，若要获取拥有某一个类名的元素。</h4>
+<blockquote>
+<p>$$('[htmlTag].[className]')，例如：  <code>$$('div.content-wrap')</code></p>
+</blockquote>
+<h4 id="10v-if%E5%92%8Cv-show%E9%80%89%E6%8B%A9%E5%93%AA%E4%B8%80%E4%B8%AA">10.<code>v-if</code>和<code>v-show</code>选择哪一个</h4>
+<ul>
+<li><code>v-if</code>是惰性的，初始条件为 false，则直接不渲染。同时它的改变意味着 DOM 元素的销毁。=&gt; reflow 回流。</li>
+</ul>
+<blockquote>
+<p>切换的时候开销较大。因此切换的时候使用 v-show.</p>
+</blockquote>
+<ul>
+<li><code>v-show</code>代表着该 DOM 元素是渲染的。改变的只是元素的 <code>display</code> 属性.</li>
+</ul>
+<blockquote>
+<p>如果较少切换，只在第一次运行的时候使用到，可以用 v-if.</p>
+</blockquote>
+<h4 id="11%E8%A7%A3%E5%86%B3css-loader%E5%AF%B9%E5%9B%BE%E7%89%87%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84-url%E6%96%B9%E5%BC%8F-%E5%BC%95%E7%94%A8%E7%9A%84%E5%8A%9E%E6%B3%95----%E4%BF%AE%E6%94%B9-vue-cli-%E4%B8%AD-webpack-%E7%9A%84%E9%85%8D%E7%BD%AE">11.解决<code>css-loader</code>对图片静态资源的绝对路径 url方式 引用的办法 -- 修改 vue-cli 中 webpack 的配置</h4>
+<pre class="hljs"><code><div>const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    sourceMap: options.sourceMap,
+    root: path.resolve(__dirname, '../static'),
+    url: true,
+    alias: {
+      '@': path.resolve(__dirname, '../static')
+    },
+    import: false,
+    modules: false,
+    minimize: true,
+    sourceMap: true,
+    camelCase: false,
+  }
+}
+</div></code></pre>
+<h4 id="12%E5%85%B3%E4%BA%8E-src-%E6%96%B9%E5%BC%8F%E7%9A%84%E5%BC%95%E5%85%A5">12.关于 src 方式的引入</h4>
+<pre class="hljs"><code><div>&lt;img src=&quot;~common/xxx.jpg&quot; alt=&quot;&quot; width=&quot;100px&quot; height=&quot;100px&quot;&gt;
+&lt;img :src=&quot;params&quot; alt=&quot;&quot;&gt;
+</div></code></pre>
+<ul>
+<li>前者采用 ~common 的alias方法引入 ！！！！！！！！！！！</li>
+<li>后者应该用 线上的地址。 否则怎么搞都是错的！！！！！！！！！</li>
+</ul>
+<h4 id="13%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C%E5%AD%A6%E4%B9%A0">13.渐变效果学习</h4>
+<pre class="hljs"><code><div>transition all 0.5s
+&amp;.fade-enter-active, &amp;.fade-leave-active
+  transition: all 0.5s
+&amp;.fade-enter, &amp;.fade-leave-active
+  opacity: 0
+  background: rgba(7, 17, 27, 0)
+</div></code></pre>
+<h4 id="14%E9%99%A4%E4%BA%86%E8%AE%BE%E7%BD%AE%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%E4%BB%A5%E5%A4%96%E5%A6%82%E4%BD%95%E8%AE%A9-overflow-hidensroll-%E7%94%9F%E6%95%88%EF%BC%9F">14.除了设置固定高度以外如何让 overflow: hiden/sroll 生效？</h4>
+<p>通过设置 绝对定位 和 top 和 right</p>
+<pre class="hljs"><code><div>position: absolute;
+top: 174px;
+bottom: 37px;
+</div></code></pre>
+<h4 id="15background-size-container-%E5%92%8C-background-size-cover-%E7%9A%84%E5%8C%BA%E5%88%AB">15.<code>background-size: container</code> 和 <code>background-size: cover</code> 的区别</h4>
+<blockquote>
+<p>作用原理基本相同。都是将图片缩放以适应整个容器的宽高。(图片的宽高比没有改变)</p>
+</blockquote>
+<ul>
+<li>no-repeat 的情况下
+<ul>
+<li>cover 铺满容器，多出的部分被裁掉 =&gt; 委曲求全          =&gt; 成全</li>
+<li>contain 容器内至少有一张完整的图 =&gt; 拼尽全力，全身而进 =&gt; 强扭的瓜</li>
+</ul>
+</li>
+<li>repeat 的情况下
+<ul>
+<li>cover 与上述相同</li>
+<li>contain 平铺。(想起 XP 时代的桌面背景了吗。。简直就是儿时的回忆)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="16%E5%85%B3%E4%BA%8E-better-scroll-%E8%BF%99%E4%B8%AA%E7%BB%84%E4%BB%B6">16.关于 better-scroll 这个组件</h4>
+<blockquote>
+<p>实际上当使用这个组件之后，系统默认的 onClick 就会被屏蔽掉.</p>
+</blockquote>
+<h4 id="17%E5%A6%82%E4%BD%95%E7%BB%99%E8%A7%82%E6%B5%8B%E5%AF%B9%E8%B1%A1%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7">17.如何给观测对象添加属性</h4>
+<blockquote>
+<p>直接给观测对象，如组件中被传入 props，添加属性，是不可以的。
+受 ES5 的限制，Vue.js 不能检测到对象属性的添加或删除。因为 Vue.js 在初始化实例时将属性转为 getter/setter，所以属性必须在 data 对象上才能让 Vue.js 转换它，才能让它是响应的。
+解决方案是使用： Vue.set(this.obj, 'attrName', 1);</p>
+</blockquote>
+<h4 id="18vue-cli%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84webpack-dev-server%E9%87%8C%E9%9D%A2%E6%9C%89%E6%BC%8F%E6%B4%9E%E3%80%82">18.vue-cli中使用的webpack-dev-server里面有漏洞。</h4>
+<blockquote>
+<p>执行 npm audit fix 之后，再将 webpack-dev-server 降级为 @3.0.0</p>
+</blockquote>
+<h4 id="19%E5%85%B3%E4%BA%8E%E8%A7%A6%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8%E9%87%8D%E7%BB%98%E7%9A%84%E7%9F%A5%E8%AF%86">19.关于触发浏览器重绘的知识</h4>
+<blockquote>
+<p>https://blog.csdn.net/i13738612458/article/details/80373702</p>
+</blockquote>
+<h4 id="20better-scroll-%E5%92%8C-fixed-%E5%85%B1%E5%AD%98%E6%97%B6%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3">20.better-scroll 和 fixed 共存时失效的解决</h4>
+<pre class="hljs"><code><div>    &lt;div class=&quot;food-wrap&quot; v-show=&quot;showFlag&quot; ref=&quot;food&quot;&gt;
+      &lt;div class=&quot;food-content&quot;&gt;
+        ...
+        Your structure
+        ...
+      &lt;/div&gt;
+    &lt;/div&gt;
+</div></code></pre>
+<blockquote>
+<p>food-wrap为 fixed 布局，可在内层加一层空层 food-content 即可解决</p>
+</blockquote>
+<h4 id="21%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98">21.打包之后可能出现的问题</h4>
+<p><code>expected token u in JSON at position 0</code></p>
+<blockquote>
+<p>https://www.cnblogs.com/yangxunwu1992/p/8964780.html
+这个错误是由于 JSON.parse 解析了 undefined。确保所解析的东西不是 undefined 即可。</p>
+</blockquote>
+<h4 id="22%E5%85%B3%E4%BA%8E-2x%E5%9B%BE-%E5%92%8C-3x%E5%9B%BE%E3%80%82">22.关于 2x图 和 3x图。</h4>
+<blockquote>
+<p>https://www.jianshu.com/p/e61d1d98a4cb</p>
+</blockquote>
+<ul>
+<li>这是个挺有意思的历史原因。
+<ul>
+<li>2007年初代iPhone 3GS,320x480像素。一个点是一个像素。</li>
+<li>2010年iPhone4发布，使用Retina显示屏，尺寸还是320*480，但像素为640x960。一个点是两个像素。</li>
+<li>2014年iPhone6s Plus发布，尺寸是414736,像素为12422208。一个点是三个像素。</li>
+</ul>
+</li>
+<li>文字啥的，是矢量元素，放大多少倍无关紧要，图片可就要紧了。小图片放大好几倍屏幕就会有马赛克啦。
+<ul>
+<li>如果把 2x 的图片放在 3x 的屏幕上，那无疑是会变模糊的，影响了用户体验</li>
+<li>如果把 3x 的图片放在 2x 的屏幕上，那么会消耗内存，所以还是要一一对应滴。</li>
+</ul>
+</li>
+</ul>
+<h4 id="23pathresolve-%E5%92%8C-pathjoin-%E7%9A%84%E5%8C%BA%E5%88%AB">23.path.resolve 和 path.join 的区别</h4>
+<ul>
+<li>path.join - 组装路径</li>
+</ul>
+<blockquote>
+<p>path.join('test', 'dota2', 'jx3') =&gt; test\dota2\jx3</p>
+</blockquote>
+<ul>
+<li>path.resolve - 解析为当前目录的绝对路径</li>
+</ul>
+<blockquote>
+<p>path.resolve('test', 'dota2', 'jx3') =&gt; D:\vue-elema\test\dota2\jx3</p>
+</blockquote>
+<p>所以呢，理论上来说 <code>path.join(__dirname, xxx)</code> 和 <code>path.resolve(__dirname, 效果是一样的)</code>。
+主要还是因为 __dirname 指向被执行 JS 的绝对路径。用了它之后我们以为 join 和 resolve 是一样的啦。
+实际还是 __dirname 的功劳 ==，能说功劳吗？</p>
+<h4 id="%E5%8F%AF%E4%BC%98%E5%8C%96">可优化</h4>
+<h4 id="1%E4%BB%A3%E7%A0%81%E7%9A%84%E5%89%8D%E5%90%8E%E5%8F%B0%E4%BA%A4%E4%BA%92%E4%B8%AD%E5%B5%8C%E5%A5%97%E8%BF%87%E5%A4%9A%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BC%98%E5%8C%96-resdatadata-resdata-%E4%B9%8B%E7%B1%BB%E7%9A%84%E3%80%82">1.代码的前后台交互中嵌套过多，可以优化  res.data.data =&gt; res.data 之类的。</h4>
+<h4 id="2%E5%85%B3%E4%BA%8E%E6%98%9F%E6%98%9F%E7%9A%84%E9%83%A8%E5%88%86%EF%BC%8C%E8%80%83%E8%99%91%E4%BB%A5%E5%89%8D%E6%88%91%E7%9C%8B%E8%BF%87%E7%9A%84%E4%B8%80%E4%B8%AA%E6%95%99%E7%A8%8B%E3%80%82%E9%80%9A%E8%BF%87%E4%B8%80%E5%BC%A0-%E4%B8%8A%E4%B8%AD%E4%B8%8B---%E6%9C%89%E6%98%9F%E3%80%81%E5%8D%8A%E6%98%9F%E3%80%81%E6%97%A0%E6%98%9F-%E7%9A%84%E5%9B%BE%E6%9D%A5%E5%AE%9E%E7%8E%B0%E3%80%82-%E6%94%B9%E5%8F%98%E7%9A%84%E5%8F%AA%E6%98%AF%E5%85%B6%E4%BD%8D%E7%BD%AE"><s>2.关于星星的部分，考虑以前我看过的一个教程。通过一张 上中下 - 有星、半星、无星 的图来实现。  改变的只是其位置</s></h4>
+<h4 id="2%E7%9B%B4%E6%8E%A5%E7%94%A8%E5%8D%81%E9%A2%97%E6%98%9F%E4%BD%9C%E4%B8%BA%E4%B8%80%E5%BC%A0%E6%95%B4%E5%9B%BE%EF%BC%8C%E9%80%9A%E8%BF%87%E7%A7%BB%E5%8A%A8%E6%95%B4%E5%9B%BE%E6%9D%A5%E5%AE%9E%E7%8E%B0%E3%80%82">2.直接用十颗星作为一张整图，通过移动整图来实现。</h4>
+<h4 id="2ps%E9%87%87%E7%94%A8%E5%8D%95%E4%B8%AA%E7%9A%84-%E5%85%A8%E6%98%9F%E3%80%81%E5%8D%8A%E6%98%9F%E3%80%81%E6%97%A0%E6%98%9F-%E7%9A%84%E5%A5%BD%E5%A4%84%E6%98%AF%E5%8F%AF%E4%BB%A5%E5%BA%94%E5%AF%B9%E5%A4%9A%E7%A7%8D%E6%83%85%E5%86%B5">2PS.采用单个的 全星、半星、无星 的好处是可以应对多种情况.</h4>
+<h4 id="3%E5%85%B3%E4%BA%8Efor%E5%BE%AA%E7%8E%AF%E6%B7%BB%E5%8A%A0%E5%90%8C%E6%A0%B7%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%88%B0%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E9%87%8C%E9%9D%A2%E3%80%82">3.关于for循环添加同样的一个对象到一个数组里面。</h4>
+<blockquote>
+<p>是否有更快捷的办法。不使用 for 循环？</p>
+</blockquote>
+
+</body>
+</html>
