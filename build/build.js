@@ -16,6 +16,7 @@ const webpackConfig = require('./webpack.prod.conf')
 const spinner = ora('building for production...')
 spinner.start()
 
+// 这里是清除掉之前的 build 结果的地方，如果不想清除，注释下面这两行和最末尾的括号即可。
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {

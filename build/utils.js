@@ -100,7 +100,9 @@ exports.styleLoaders = function (options) {
   // fs.writeFile(filename, data, [options], callback)
   // {flag: 'a'} 是追加参数
   fs.writeFile(path.resolve(__dirname, 'testOutput.txt'), JSON.stringify(output), {flag: 'a'}, (err) => {
-    console.log('写入出错', err);
+    if (err) {
+      console.log('写入出错', err);
+    }
   });
 
   return output
